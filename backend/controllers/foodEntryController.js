@@ -2,11 +2,42 @@ import FoodEntry from "../models/food_entries.model.js";
 import { foodEntrySchema } from "../validators/validator.js";
 import { Op } from "sequelize";
 import foodTranslationService from "../services/foodTranslationService.js";
+import imageAnalysisService from "../services/imageAnalysisService.js";
+import multer from "multer";
+import path from "path";
+import fs from "fs";
+
+// Configure multer for image upload
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    const uploadDir = "uploads";
+    if (!fs.existsSync(uploadDir)) {
+      fs.mkdirSync(uploadDir);
+    }
+    cb(null, uploadDir);
+  },
+  filename: function (req, file, cb) {
+    cb(null, Date.now() + path.extname(file.originalname));
+  },
+});
+
+const upload = multer({
+  storage: storage,
+  limits: { fileSize: 5 * 1024 * 1024 }, // 5MB limit
+  fileFilter: (req, file, cb) => {
+    const allowedTypes = ["image/jpeg", "image/png", "image/jpg"];
+    if (allowedTypes.includes(file.mimetype)) {
+      cb(null, true);
+    } else {
+      cb(new Error("Invalid file type. Only JPEG, PNG and JPG are allowed."));
+    }
+  },
+}).single("image");
 
 // Add food entry
 export const addFoodEntry = async (req, res) => {
   try {
-    const { food_name, food_name_somali } = req.body;
+    const { food_name, food_name_somali, portion_size = "N/A" } = req.body;
     const userId = req.user.user_id;
 
     // If only Somali name is provided, translate it
@@ -38,6 +69,7 @@ export const addFoodEntry = async (req, res) => {
       fdcId: nutritionData.fdcId,
       servingSize: nutritionData.servingSize,
       servingUnit: nutritionData.servingUnit,
+      portionSize: portion_size || "N/A",
     });
 
     res.json({
@@ -183,4 +215,77 @@ export const deleteFoodEntry = async (req, res) => {
       error: error.message,
     });
   }
+};
+
+// Add food entry from image
+export const addFoodEntryFromImage = async (req, res) => {
+  upload(req, res, async function (err) {
+    if (err) {
+      return res.status(400).json({
+        success: false,
+        message: err.message,
+      });
+    }
+
+    if (!req.file) {
+      return res.status(400).json({
+        success: false,
+        message: "No image file provided",
+      });
+    }
+
+    try {
+      const userId = req.user.user_id;
+      const imagePath = req.file.path;
+
+      // Analyze image using OpenAI
+      const analysisResult = await imageAnalysisService.analyzeFoodImage(
+        imagePath
+      );
+
+      // Process each food item
+      const foodEntries = await Promise.all(
+        analysisResult.food_items.map(async (item) => {
+          // Get nutrition data from USDA
+          const nutritionData = await foodTranslationService.getNutritionInfo(
+            item.name
+          );
+
+          // Create food entry
+          return FoodEntry.create({
+            userId,
+            foodName: item.name,
+            foodNameSomali: item.namesom,
+            calories: nutritionData.nutrients.calories,
+            protein: nutritionData.nutrients.protein,
+            fat: nutritionData.nutrients.fats,
+            carbohydrates: nutritionData.nutrients.carbs,
+            vitaminA: nutritionData.nutrients.vitamins.A,
+            vitaminC: nutritionData.nutrients.vitamins.C,
+            calcium: nutritionData.nutrients.minerals.calcium,
+            iron: nutritionData.nutrients.minerals.iron,
+            fdcId: nutritionData.fdcId,
+            servingSize: nutritionData.servingSize,
+            servingUnit: nutritionData.servingUnit,
+            portionSize: item.portionsize || "N/A",
+          });
+        })
+      );
+
+      // Clean up uploaded file
+      fs.unlinkSync(imagePath);
+
+      res.json({
+        success: true,
+        message: "Food entries added successfully",
+        data: foodEntries,
+      });
+    } catch (error) {
+      console.error("Error in addFoodEntryFromImage:", error);
+      res.status(500).json({
+        success: false,
+        message: error.message || "Failed to process food image",
+      });
+    }
+  });
 };

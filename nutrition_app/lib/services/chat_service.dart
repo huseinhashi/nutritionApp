@@ -4,9 +4,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class ChatService {
   static const String _apiKey =
-      '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';
-  static const String _baseUrl =
-      'https://openrouter.ai/api/v1/chat/completions';
+      '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'; // Replace with your OpenAI API key
+  static const String _baseUrl = 'https://api.openai.com/v1/chat/completions';
   static const String _messagesKey = 'chat_messages';
   static const int _maxMessageAge = 3; // days
 
@@ -17,16 +16,22 @@ class ChatService {
         headers: {
           'Authorization': 'Bearer $_apiKey',
           'Content-Type': 'application/json',
-          'HTTP-Referer': 'com.nutrition.app://',
-          'X-Title': 'Nutrition Tracker Chat Support',
         },
         body: jsonEncode({
-          'model': 'deepseek/deepseek-r1:free',
+          // 'model': 'gpt-4o', // 100 messages are around $3
+          'model': 'gpt-4o-2024-08-06', // 100 messages are around $1.5
           'messages': [
             {
               'role': 'system',
               'content':
-                  'You are a concise nutrition assistant. Provide brief, accurate nutrition advice. Focus on practical, actionable advice.',
+                  '''You are a professional nutrition assistant with expertise in multiple languages. 
+              Provide accurate, evidence-based nutrition advice. 
+              Keep responses concise but informative.
+              If the user's message is not in English, respond in their language.
+              Focus on practical, actionable advice that aligns with current nutritional guidelines.
+              Always consider cultural context when providing advice.
+              and do not answer any questions that are not related to nutrition.
+              ''',
             },
             {
               'role': 'user',
@@ -85,8 +90,9 @@ class ChatService {
     if (messagesJson == null) {
       // Add welcome message if no messages exist
       final welcomeMessage = {
-        'message':
-            'Hello! I\'m your nutrition assistant. How can I help you with your nutrition goals today?',
+        'message': '''Hello! I'm your multilingual nutrition assistant. 
+        I can help you with nutrition advice in multiple languages.
+        How can I assist you with your nutrition goals today?''',
         'isUser': false,
         'timestamp': DateTime.now().toIso8601String(),
       };

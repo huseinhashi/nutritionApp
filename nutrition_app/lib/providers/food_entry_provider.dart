@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:nutrition_app/services/food_entry_service.dart';
 
@@ -135,5 +136,25 @@ class FoodEntryProvider with ChangeNotifier {
   void clearError() {
     _error = null;
     notifyListeners();
+  }
+
+  // Add food entry from image
+  Future<List<Map<String, dynamic>>> addFoodEntryFromImage(
+      File imageFile) async {
+    _isLoading = true;
+    _error = null;
+    notifyListeners();
+
+    try {
+      final result = await _foodEntryService.addFoodEntryFromImage(imageFile);
+      await fetchFoodEntries(); // Refresh entries after adding
+      return result;
+    } catch (e) {
+      _error = e.toString();
+      rethrow;
+    } finally {
+      _isLoading = false;
+      notifyListeners();
+    }
   }
 }

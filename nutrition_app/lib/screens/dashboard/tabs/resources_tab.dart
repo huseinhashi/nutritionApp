@@ -18,6 +18,7 @@ class _ResourcesTabState extends State<ResourcesTab>
   final TextEditingController _searchController = TextEditingController();
   String _searchQuery = '';
   bool _isSearching = false;
+  String? _selectedCategory;
 
   @override
   void initState() {
@@ -124,6 +125,44 @@ class _ResourcesTabState extends State<ResourcesTab>
                 },
               ),
             ),
+          // Category Filter
+          Container(
+            height: 50,
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: ListView.builder(
+              scrollDirection: Axis.horizontal,
+              itemCount: resourceCategories.length + 1, // +1 for "All" option
+              itemBuilder: (context, index) {
+                if (index == 0) {
+                  return Padding(
+                    padding: const EdgeInsets.only(right: 8),
+                    child: FilterChip(
+                      label: const Text('All'),
+                      selected: _selectedCategory == null,
+                      onSelected: (selected) {
+                        setState(() {
+                          _selectedCategory = null;
+                        });
+                      },
+                    ),
+                  );
+                }
+                final category = resourceCategories[index - 1];
+                return Padding(
+                  padding: const EdgeInsets.only(right: 8),
+                  child: FilterChip(
+                    label: Text(getCategoryDisplayName(category)),
+                    selected: _selectedCategory == category,
+                    onSelected: (selected) {
+                      setState(() {
+                        _selectedCategory = selected ? category : null;
+                      });
+                    },
+                  ),
+                );
+              },
+            ),
+          ),
           Expanded(
             child: TabBarView(
               controller: _tabController,
@@ -141,11 +180,11 @@ class _ResourcesTabState extends State<ResourcesTab>
   }
 
   Widget _buildArticlesList() {
-    final articles = _searchQuery.isEmpty
-        ? getResourcesByCategory('article')
-        : searchResources(_searchQuery)
-            .where((resource) => resource.category == 'article')
-            .toList();
+    final articles = getFilteredResources(
+      category: _selectedCategory,
+      type: 'article',
+      searchQuery: _searchQuery,
+    );
 
     if (articles.isEmpty) {
       return Center(
@@ -175,6 +214,29 @@ class _ResourcesTabState extends State<ResourcesTab>
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  Row(
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 8,
+                          vertical: 4,
+                        ),
+                        decoration: BoxDecoration(
+                          color: primaryColor.withOpacity(0.1),
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        child: Text(
+                          getCategoryDisplayName(article.category),
+                          style: GoogleFonts.poppins(
+                            color: primaryColor,
+                            fontSize: 12,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 8),
                   Text(
                     article.title,
                     style: GoogleFonts.poppins(
@@ -189,6 +251,25 @@ class _ResourcesTabState extends State<ResourcesTab>
                     style: GoogleFonts.poppins(
                       color: textSecondaryColor,
                     ),
+                  ),
+                  const SizedBox(height: 8),
+                  Wrap(
+                    spacing: 8,
+                    runSpacing: 8,
+                    children: article.tags.map((tag) {
+                      return Chip(
+                        label: Text(
+                          tag.replaceAll('_', ' ').toUpperCase(),
+                          style: GoogleFonts.poppins(
+                            fontSize: 10,
+                            color: textSecondaryColor,
+                          ),
+                        ),
+                        backgroundColor: Colors.grey[200],
+                        padding: EdgeInsets.zero,
+                        materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                      );
+                    }).toList(),
                   ),
                   const SizedBox(height: 8),
                   Row(
@@ -217,11 +298,11 @@ class _ResourcesTabState extends State<ResourcesTab>
   }
 
   Widget _buildVideosList() {
-    final videos = _searchQuery.isEmpty
-        ? getResourcesByCategory('video')
-        : searchResources(_searchQuery)
-            .where((resource) => resource.category == 'video')
-            .toList();
+    final videos = getFilteredResources(
+      category: _selectedCategory,
+      type: 'video',
+      searchQuery: _searchQuery,
+    );
 
     if (videos.isEmpty) {
       return Center(
@@ -240,7 +321,7 @@ class _ResourcesTabState extends State<ResourcesTab>
       padding: const EdgeInsets.all(16),
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
-        childAspectRatio: 0.8,
+        childAspectRatio: 0.7,
         crossAxisSpacing: 16,
         mainAxisSpacing: 16,
       ),
@@ -254,25 +335,52 @@ class _ResourcesTabState extends State<ResourcesTab>
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Expanded(
-                  child: // In your CachedNetworkImage, you can try different thumbnail qualities:
-                      CachedNetworkImage(
-                    imageUrl: getYouTubeThumbnailUrl(video.videoId!),
-                    fit: BoxFit.cover,
-                    width: double.infinity,
-                    placeholder: (context, url) => const Center(
-                      child: CircularProgressIndicator(),
-                    ),
-                    errorWidget: (context, url, error) => CachedNetworkImage(
-                      imageUrl:
-                          'https://img.youtube.com/vi/${video.videoId}/hqdefault.jpg', // Try lower quality
-                      fit: BoxFit.cover,
-                      width: double.infinity,
-                      errorWidget: (context, url, error) => const Center(
-                        child: Icon(Icons.video_library, size: 50),
+                Stack(
+                  children: [
+                    AspectRatio(
+                      aspectRatio: 16 / 9,
+                      child: CachedNetworkImage(
+                        imageUrl: getYouTubeThumbnailUrl(video.videoId!),
+                        fit: BoxFit.cover,
+                        width: double.infinity,
+                        placeholder: (context, url) => const Center(
+                          child: CircularProgressIndicator(),
+                        ),
+                        errorWidget: (context, url, error) =>
+                            CachedNetworkImage(
+                          imageUrl:
+                              'https://img.youtube.com/vi/${video.videoId}/hqdefault.jpg',
+                          fit: BoxFit.cover,
+                          width: double.infinity,
+                          errorWidget: (context, url, error) => const Center(
+                            child: Icon(Icons.video_library, size: 50),
+                          ),
+                        ),
                       ),
                     ),
-                  ),
+                    Positioned(
+                      top: 8,
+                      left: 8,
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 8,
+                          vertical: 4,
+                        ),
+                        decoration: BoxDecoration(
+                          color: primaryColor.withOpacity(0.9),
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        child: Text(
+                          getCategoryDisplayName(video.category),
+                          style: GoogleFonts.poppins(
+                            color: Colors.white,
+                            fontSize: 12,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
@@ -298,6 +406,7 @@ class _ResourcesTabState extends State<ResourcesTab>
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
                       ),
+                      const SizedBox(height: 4),
                     ],
                   ),
                 ),

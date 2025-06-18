@@ -18,8 +18,17 @@ import 'package:nutrition_app/services/food_entry_service.dart';
 import 'package:nutrition_app/providers/step_counter_provider.dart';
 import 'package:nutrition_app/services/step_counter_service.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  // Initialize step counter service
+  final stepCounterService = StepCounterService();
+  try {
+    await stepCounterService.initialize();
+  } catch (e) {
+    print('Error initializing step counter: $e');
+  }
+
   runApp(const MyApp());
 }
 
@@ -30,6 +39,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     final authService = AuthService();
     final apiClient = ApiClient();
+    final stepCounterService = StepCounterService();
 
     return MultiProvider(
       providers: [
@@ -54,7 +64,7 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (context) => StepCounterProvider(
-            StepCounterService(),
+            stepCounterService,
           ),
         ),
       ],

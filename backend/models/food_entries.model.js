@@ -81,6 +81,11 @@ const FoodEntry = sequelize.define(
         return value ? parseFloat(value) : 0;
       },
     },
+    portionSize: {
+      type: DataTypes.STRING(50),
+      allowNull: true,
+      defaultValue: "N/A",
+    },
   },
   {
     tableName: "food_entries",

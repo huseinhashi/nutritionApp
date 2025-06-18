@@ -284,8 +284,9 @@ class _WaterIntakeTabState extends State<WaterIntakeTab> {
                                   value: progress.clamp(0.0, 1.0),
                                   strokeWidth: 12,
                                   backgroundColor: waterColor.withOpacity(0.2),
-                                  valueColor:
-                                      AlwaysStoppedAnimation<Color>(waterColor),
+                                  valueColor: AlwaysStoppedAnimation<Color>(
+                                    progress > 1.0 ? Colors.red : waterColor,
+                                  ),
                                 ),
                               ),
                               Column(
@@ -295,7 +296,9 @@ class _WaterIntakeTabState extends State<WaterIntakeTab> {
                                     style: GoogleFonts.poppins(
                                       fontSize: 32,
                                       fontWeight: FontWeight.bold,
-                                      color: waterColor,
+                                      color: progress > 1.0
+                                          ? Colors.red
+                                          : waterColor,
                                     ),
                                   ),
                                   Text(
@@ -310,8 +313,10 @@ class _WaterIntakeTabState extends State<WaterIntakeTab> {
                           ),
                           const SizedBox(height: 24),
                           // Quick Add Buttons with tooltips
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          Wrap(
+                            spacing: 8,
+                            runSpacing: 8,
+                            alignment: WrapAlignment.center,
                             children: [
                               Tooltip(
                                 message: 'Add 250ml (1 cup)',

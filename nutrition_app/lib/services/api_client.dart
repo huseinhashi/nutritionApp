@@ -26,6 +26,12 @@ class ApiClient {
     }
   }
 
+  // Getter for base URL
+  String get baseUrl => _dio.options.baseUrl;
+
+  // Getter for headers
+  Map<String, dynamic> get headers => _dio.options.headers ?? {};
+
   void setToken(String token) {
     // Ensure headers are initialized
     _dio.options.headers ??= {};

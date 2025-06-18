@@ -9,7 +9,7 @@ class StepCounterProvider with ChangeNotifier {
   StepCounterProvider(this._stepCounterService);
 
   bool get isInitialized => _isInitialized;
-  String? get error => _error;
+  String? get error => _error ?? _stepCounterService.error;
 
   // Initialize the step counter
   Future<void> initialize() async {
@@ -21,6 +21,7 @@ class StepCounterProvider with ChangeNotifier {
       _error = null;
     } catch (e) {
       _error = e.toString();
+      _isInitialized = false;
     }
     notifyListeners();
   }

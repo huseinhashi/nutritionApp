@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 import 'package:nutrition_app/services/chat_service.dart';
 import 'package:nutrition_app/utils/AppColor.dart';
+import 'package:flutter_markdown/flutter_markdown.dart';
 
 class HelpTab extends StatefulWidget {
   const HelpTab({super.key});
@@ -165,9 +167,21 @@ class _HelpTabState extends State<HelpTab> {
             ),
           ),
           if (_isLoading)
-            const Padding(
-              padding: EdgeInsets.all(8.0),
-              child: CircularProgressIndicator(),
+            Container(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const CircularProgressIndicator(),
+                  const SizedBox(width: 16),
+                  Text(
+                    '...',
+                    style: GoogleFonts.poppins(
+                      color: textSecondaryColor,
+                    ),
+                  ),
+                ],
+              ),
             ),
           Container(
             padding: const EdgeInsets.all(8),
@@ -188,7 +202,7 @@ class _HelpTabState extends State<HelpTab> {
                     child: TextField(
                       controller: _messageController,
                       decoration: InputDecoration(
-                        hintText: 'Ask about nutrition...',
+                        hintText: 'Ask about nutrition in any language...',
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(24),
                           borderSide: BorderSide.none,
@@ -202,6 +216,7 @@ class _HelpTabState extends State<HelpTab> {
                       ),
                       textInputAction: TextInputAction.send,
                       onSubmitted: (_) => _sendMessage(),
+                      maxLines: null, // Allow multiple lines
                     ),
                   ),
                   const SizedBox(width: 8),
@@ -221,6 +236,10 @@ class _HelpTabState extends State<HelpTab> {
 
   Widget _buildMessageBubble(Map<String, dynamic> message) {
     final isUser = message['isUser'] as bool;
+    final messageText = message['message'] as String;
+    final timestamp = DateTime.parse(message['timestamp'] as String);
+    final formattedTime = DateFormat('h:mm a').format(timestamp);
+
     return Align(
       alignment: isUser ? Alignment.centerRight : Alignment.centerLeft,
       child: Container(
@@ -229,16 +248,56 @@ class _HelpTabState extends State<HelpTab> {
         decoration: BoxDecoration(
           color: isUser ? primaryColor : Colors.grey[200],
           borderRadius: BorderRadius.circular(20),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.05),
+              blurRadius: 4,
+              offset: const Offset(0, 2),
+            ),
+          ],
         ),
         constraints: BoxConstraints(
           maxWidth: MediaQuery.of(context).size.width * 0.75,
         ),
-        child: Text(
-          message['message'] as String,
-          style: GoogleFonts.poppins(
-            color: isUser ? Colors.white : textPrimaryColor,
-            fontSize: 14,
-          ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            if (isUser)
+              Text(
+                messageText,
+                style: GoogleFonts.poppins(
+                  color: Colors.white,
+                  fontSize: 14,
+                ),
+              )
+            else
+              MarkdownBody(
+                data: messageText,
+                styleSheet: MarkdownStyleSheet(
+                  p: GoogleFonts.poppins(
+                    color: textPrimaryColor,
+                    fontSize: 14,
+                  ),
+                  strong: GoogleFonts.poppins(
+                    color: textPrimaryColor,
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  listBullet: GoogleFonts.poppins(
+                    color: textPrimaryColor,
+                    fontSize: 14,
+                  ),
+                ),
+              ),
+            const SizedBox(height: 4),
+            Text(
+              formattedTime,
+              style: GoogleFonts.poppins(
+                color: isUser ? Colors.white70 : Colors.grey[600],
+                fontSize: 10,
+              ),
+            ),
+          ],
         ),
       ),
     );

@@ -22,6 +22,9 @@ class _HealthProfileFormScreenState extends State<HealthProfileFormScreen> {
   String _selectedGender = 'male';
   String _selectedGoal = 'weight_loss';
   String _selectedActivityLevel = 'moderately_active';
+  String? _bmiCategory;
+  String? _healthWarning;
+  List<String> _availableGoals = ['weight_loss', 'maintenance', 'muscle_gain'];
 
   @override
   void initState() {
@@ -39,6 +42,72 @@ class _HealthProfileFormScreenState extends State<HealthProfileFormScreen> {
     super.dispose();
   }
 
+  double _calculateBMI(double weight, double height) {
+    // Height in meters
+    final heightInMeters = height / 100;
+    return weight / (heightInMeters * heightInMeters);
+  }
+
+  String _getBMICategory(double bmi) {
+    if (bmi < 18.5) return 'Underweight';
+    if (bmi < 25) return 'Normal weight';
+    if (bmi < 30) return 'Overweight';
+    return 'Obese';
+  }
+
+  void _updateBMIAndGoals() {
+    if (_weightController.text.isNotEmpty &&
+        _heightController.text.isNotEmpty) {
+      final weight = double.tryParse(_weightController.text);
+      final height = double.tryParse(_heightController.text);
+
+      if (weight != null && height != null) {
+        final bmi = _calculateBMI(weight, height);
+        final category = _getBMICategory(bmi);
+        setState(() {
+          _bmiCategory = category;
+          _availableGoals = _getAvailableGoals(category, bmi);
+
+          // Update selected goal if current goal is not available
+          if (!_availableGoals.contains(_selectedGoal)) {
+            _selectedGoal = _availableGoals.first;
+          }
+
+          // Set health warning based on BMI
+          _healthWarning = _getHealthWarning(category, bmi);
+        });
+      }
+    }
+  }
+
+  List<String> _getAvailableGoals(String bmiCategory, double bmi) {
+    switch (bmiCategory) {
+      case 'Underweight':
+        return ['muscle_gain', 'maintenance'];
+      case 'Normal weight':
+        return ['weight_loss', 'maintenance', 'muscle_gain'];
+      case 'Overweight':
+        return ['weight_loss', 'maintenance'];
+      case 'Obese':
+        return ['weight_loss'];
+      default:
+        return ['maintenance'];
+    }
+  }
+
+  String _getHealthWarning(String bmiCategory, double bmi) {
+    switch (bmiCategory) {
+      case 'Underweight':
+        return 'Your BMI indicates you are underweight. Consider focusing on healthy weight gain and muscle building.';
+      case 'Overweight':
+        return 'Your BMI indicates you are overweight. Focus on gradual weight loss through a balanced diet and regular exercise.';
+      case 'Obese':
+        return 'Your BMI indicates obesity. Please consult with a healthcare provider before starting any weight loss program.';
+      default:
+        return '';
+    }
+  }
+
   Future<void> _loadProfile() async {
     final provider = Provider.of<HealthProfileProvider>(context, listen: false);
     await provider.fetchProfile();
@@ -50,6 +119,7 @@ class _HealthProfileFormScreenState extends State<HealthProfileFormScreen> {
       _selectedGender = profile['gender'];
       _selectedGoal = profile['goal'];
       _selectedActivityLevel = profile['activity_level'];
+      _updateBMIAndGoals();
     }
   }
 
@@ -189,6 +259,7 @@ class _HealthProfileFormScreenState extends State<HealthProfileFormScreen> {
                     TextFormField(
                       controller: _weightController,
                       keyboardType: TextInputType.number,
+                      onChanged: (_) => _updateBMIAndGoals(),
                       decoration: InputDecoration(
                         labelText: 'Weight (kg)',
                         prefixIcon: Icon(Icons.monitor_weight_outlined,
@@ -214,6 +285,7 @@ class _HealthProfileFormScreenState extends State<HealthProfileFormScreen> {
                     TextFormField(
                       controller: _heightController,
                       keyboardType: TextInputType.number,
+                      onChanged: (_) => _updateBMIAndGoals(),
                       decoration: InputDecoration(
                         labelText: 'Height (cm)',
                         prefixIcon: Icon(Icons.height, color: primaryColor),
@@ -234,6 +306,39 @@ class _HealthProfileFormScreenState extends State<HealthProfileFormScreen> {
                     ),
                     const SizedBox(height: 16),
 
+                    // BMI Category and Warning
+                    if (_bmiCategory != null) ...[
+                      Card(
+                        color: _getBMICardColor(_bmiCategory!),
+                        child: Padding(
+                          padding: const EdgeInsets.all(12.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'BMI Category: $_bmiCategory',
+                                style: GoogleFonts.poppins(
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white,
+                                ),
+                              ),
+                              if (_healthWarning != null) ...[
+                                const SizedBox(height: 8),
+                                Text(
+                                  _healthWarning!,
+                                  style: GoogleFonts.poppins(
+                                    color: Colors.white,
+                                    fontSize: 14,
+                                  ),
+                                ),
+                              ],
+                            ],
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 16),
+                    ],
+
                     // Goal
                     DropdownButtonFormField<String>(
                       value: _selectedGoal,
@@ -245,20 +350,12 @@ class _HealthProfileFormScreenState extends State<HealthProfileFormScreen> {
                           borderRadius: BorderRadius.circular(8),
                         ),
                       ),
-                      items: const [
-                        DropdownMenuItem(
-                          value: 'weight_loss',
-                          child: Text('Weight Loss'),
-                        ),
-                        DropdownMenuItem(
-                          value: 'maintenance',
-                          child: Text('Maintenance'),
-                        ),
-                        DropdownMenuItem(
-                          value: 'muscle_gain',
-                          child: Text('Muscle Gain'),
-                        ),
-                      ],
+                      items: _availableGoals.map((goal) {
+                        return DropdownMenuItem(
+                          value: goal,
+                          child: Text(_getGoalDisplayName(goal)),
+                        );
+                      }).toList(),
                       onChanged: (value) {
                         if (value != null) {
                           setState(() => _selectedGoal = value);
@@ -334,5 +431,33 @@ class _HealthProfileFormScreenState extends State<HealthProfileFormScreen> {
               ),
             ),
     );
+  }
+
+  String _getGoalDisplayName(String goal) {
+    switch (goal) {
+      case 'weight_loss':
+        return 'Weight Loss';
+      case 'maintenance':
+        return 'Maintenance';
+      case 'muscle_gain':
+        return 'Muscle Gain';
+      default:
+        return goal;
+    }
+  }
+
+  Color _getBMICardColor(String category) {
+    switch (category) {
+      case 'Underweight':
+        return Colors.orange;
+      case 'Normal weight':
+        return Colors.green;
+      case 'Overweight':
+        return Colors.orange;
+      case 'Obese':
+        return Colors.red;
+      default:
+        return Colors.grey;
+    }
   }
 }

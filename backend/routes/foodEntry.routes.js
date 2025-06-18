@@ -4,6 +4,7 @@ import {
   addFoodEntry,
   getFoodEntries,
   deleteFoodEntry,
+  addFoodEntryFromImage,
 } from "../controllers/foodEntryController.js";
 
 const router = express.Router();
@@ -16,6 +17,7 @@ router.post("/", addFoodEntry);
 
 // Get food entries with optional date range
 router.get("/", getFoodEntries);
+router.post("/image", addFoodEntryFromImage);
 
 // Delete food entry
 router.delete("/:id", deleteFoodEntry);

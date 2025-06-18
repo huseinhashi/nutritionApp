@@ -2,23 +2,46 @@ import 'dart:async';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:intl/intl.dart';
 import 'package:pedometer/pedometer.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class StepCounterService {
   static const String _stepsKey = 'daily_steps';
   static const String _lastResetDateKey = 'last_steps_reset_date';
 
-  final Pedometer _pedometer = Pedometer();
+  Stream<StepCount>? _stepCountStream;
+  Stream<PedestrianStatus>? _pedestrianStatusStream;
   StreamSubscription<StepCount>? _stepCountSubscription;
   StreamSubscription<PedestrianStatus>? _pedestrianStatusSubscription;
 
   int _currentSteps = 0;
   DateTime _lastResetDate = DateTime.now();
+  String? _error;
+
+  String? get error => _error;
 
   // Initialize the service and load saved data
   Future<void> initialize() async {
-    await _loadSavedData();
-    await _checkAndResetDailySteps();
-    _startListening();
+    try {
+      // Request permissions first
+      await _requestPermissions();
+
+      await _loadSavedData();
+      await _checkAndResetDailySteps();
+      await _startListening();
+      _error = null;
+    } catch (e) {
+      _error = e.toString();
+      rethrow;
+    }
+  }
+
+  // Request necessary permissions
+  Future<void> _requestPermissions() async {
+    if (await Permission.activityRecognition.request().isGranted) {
+      print('Activity recognition permission granted');
+    } else {
+      throw Exception('Activity recognition permission not granted');
+    }
   }
 
   // Load saved steps and last reset date
@@ -49,27 +72,42 @@ class StepCounterService {
   }
 
   // Start listening to step count updates
-  void _startListening() {
-    _stepCountSubscription?.cancel();
-    _stepCountSubscription = Pedometer.stepCountStream.listen(
-      (StepCount event) async {
-        _currentSteps = event.steps;
-        await _saveData();
-      },
-      onError: (error) {
-        print('Error getting step count: $error');
-      },
-    );
+  Future<void> _startListening() async {
+    try {
+      // Cancel existing subscriptions
+      await _stepCountSubscription?.cancel();
+      await _pedestrianStatusSubscription?.cancel();
 
-    _pedestrianStatusSubscription?.cancel();
-    _pedestrianStatusSubscription = Pedometer.pedestrianStatusStream.listen(
-      (PedestrianStatus event) {
-        // Handle pedestrian status if needed
-      },
-      onError: (error) {
-        print('Error getting pedestrian status: $error');
-      },
-    );
+      // Initialize streams
+      _stepCountStream = Pedometer.stepCountStream;
+      _pedestrianStatusStream = Pedometer.pedestrianStatusStream;
+
+      // Listen to step count stream
+      _stepCountSubscription = _stepCountStream?.listen(
+        (StepCount event) async {
+          print('Step count event received: ${event.steps}');
+          _currentSteps = event.steps;
+          await _saveData();
+        },
+        onError: (error) {
+          _error = 'Error getting step count: $error';
+          print(_error);
+        },
+      );
+
+      // Listen to pedestrian status stream
+      _pedestrianStatusSubscription = _pedestrianStatusStream?.listen(
+        (PedestrianStatus event) {
+          print('Pedestrian status: ${event.status}');
+        },
+        onError: (error) {
+          print('Error getting pedestrian status: $error');
+        },
+      );
+    } catch (e) {
+      _error = e.toString();
+      rethrow;
+    }
   }
 
   // Get current step count
@@ -88,8 +126,8 @@ class StepCounterService {
   }
 
   // Dispose of subscriptions
-  void dispose() {
-    _stepCountSubscription?.cancel();
-    _pedestrianStatusSubscription?.cancel();
+  Future<void> dispose() async {
+    await _stepCountSubscription?.cancel();
+    await _pedestrianStatusSubscription?.cancel();
   }
 }
