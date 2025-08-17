@@ -12,7 +12,7 @@ class ApiClient {
   ApiClient._internal() {
     _dio = Dio(
       BaseOptions(
-        baseUrl: 'http://192.168.235.32:6400/api/v1',
+        baseUrl: 'http://10.143.74.161:6400/api/v1',
         validateStatus: (status) => true, // Handle all status codes ourselves
         connectTimeout: const Duration(seconds: 60),
         receiveTimeout: const Duration(seconds: 60),
