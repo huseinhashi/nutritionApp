@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:nutrition_app/providers/water_intake_provider.dart';
 import 'package:nutrition_app/providers/health_profile_provider.dart';
+import 'package:nutrition_app/providers/language_provider.dart';
 import 'package:intl/intl.dart';
 import 'package:timezone/timezone.dart' as tz;
 import 'package:timezone/data/latest.dart' as tz;
@@ -23,7 +24,8 @@ class _WaterIntakeTabState extends State<WaterIntakeTab> {
     tz.initializeTimeZones();
     // Fetch water intake data when the tab is opened
     Future.microtask(
-        () => context.read<WaterIntakeProvider>().fetchWaterIntake());
+      () => context.read<WaterIntakeProvider>().fetchWaterIntake(),
+    );
   }
 
   Future<void> _refreshData() async {
@@ -33,7 +35,9 @@ class _WaterIntakeTabState extends State<WaterIntakeTab> {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Error refreshing data: $e'),
+            content: Text(
+              '${context.read<LanguageProvider>().getText('error')}: $e',
+            ),
             backgroundColor: Theme.of(context).colorScheme.error,
           ),
         );
@@ -54,6 +58,7 @@ class _WaterIntakeTabState extends State<WaterIntakeTab> {
 
   Future<void> _showAddWaterDialog(BuildContext context, double amount) async {
     final provider = context.read<WaterIntakeProvider>();
+    final languageProvider = context.read<LanguageProvider>();
     final now = DateTime.now();
     final intakeDate = DateFormat('yyyy-MM-dd').format(now);
 
@@ -61,17 +66,18 @@ class _WaterIntakeTabState extends State<WaterIntakeTab> {
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Add Water Intake'),
+        title: Text(languageProvider.getText('add_water_intake')),
         content: Text(
-            'Are you sure you want to add ${(amount * 1000).toStringAsFixed(0)}ml of water?'),
+          '${languageProvider.getText('add_water_intake')} ${(amount * 1000).toStringAsFixed(0)}ml ${languageProvider.getText('water_intake').toLowerCase()}?',
+        ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context, false),
-            child: const Text('CANCEL'),
+            child: Text(languageProvider.getText('cancel')),
           ),
           TextButton(
             onPressed: () => Navigator.pop(context, true),
-            child: const Text('ADD'),
+            child: Text(languageProvider.getText('add_water')),
           ),
         ],
       ),
@@ -86,34 +92,40 @@ class _WaterIntakeTabState extends State<WaterIntakeTab> {
       );
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Water intake added successfully')),
+          SnackBar(
+            content: Text(languageProvider.getText('water_added_success')),
+          ),
         );
       }
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Error: ${e.toString()}')),
+          SnackBar(
+            content: Text(
+              '${languageProvider.getText('error')}: ${e.toString()}',
+            ),
+          ),
         );
       }
     }
   }
 
   Future<void> _showDeleteConfirmation(BuildContext context, int id) async {
+    final languageProvider = context.read<LanguageProvider>();
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Delete Entry'),
-        content: const Text(
-            'Are you sure you want to delete this water intake entry?'),
+        title: Text(languageProvider.getText('delete_entry')),
+        content: Text(languageProvider.getText('delete_water_confirmation')),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context, false),
-            child: const Text('CANCEL'),
+            child: Text(languageProvider.getText('cancel')),
           ),
           TextButton(
             onPressed: () => Navigator.pop(context, true),
             style: TextButton.styleFrom(foregroundColor: errorColor),
-            child: const Text('DELETE'),
+            child: Text(languageProvider.getText('delete')),
           ),
         ],
       ),
@@ -126,42 +138,49 @@ class _WaterIntakeTabState extends State<WaterIntakeTab> {
       await provider.deleteWaterIntake(id);
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Entry deleted successfully')),
+          SnackBar(
+            content: Text(languageProvider.getText('entry_deleted_success')),
+          ),
         );
       }
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Error: ${e.toString()}')),
+          SnackBar(
+            content: Text(
+              '${languageProvider.getText('error')}: ${e.toString()}',
+            ),
+          ),
         );
       }
     }
   }
 
   Future<void> _showCustomAmountDialog(BuildContext context) async {
+    final languageProvider = context.read<LanguageProvider>();
     final TextEditingController controller = TextEditingController();
     final formKey = GlobalKey<FormState>();
 
     return showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Add Custom Amount'),
+        title: Text(languageProvider.getText('add_custom_amount')),
         content: Form(
           key: formKey,
           child: TextFormField(
             controller: controller,
             keyboardType: TextInputType.number,
-            decoration: const InputDecoration(
-              labelText: 'Amount (ml)',
+            decoration: InputDecoration(
+              labelText: languageProvider.getText('amount_ml'),
               suffixText: 'ml',
             ),
             validator: (value) {
               if (value == null || value.isEmpty) {
-                return 'Please enter an amount';
+                return languageProvider.getText('please_enter_amount');
               }
               final amount = double.tryParse(value);
               if (amount == null || amount <= 0) {
-                return 'Please enter a valid amount';
+                return languageProvider.getText('please_enter_valid_amount');
               }
               return null;
             },
@@ -170,7 +189,7 @@ class _WaterIntakeTabState extends State<WaterIntakeTab> {
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('CANCEL'),
+            child: Text(languageProvider.getText('cancel')),
           ),
           TextButton(
             onPressed: () {
@@ -181,7 +200,7 @@ class _WaterIntakeTabState extends State<WaterIntakeTab> {
                 _showAddWaterDialog(context, amount);
               }
             },
-            child: const Text('ADD'),
+            child: Text(languageProvider.getText('add_water')),
           ),
         ],
       ),
@@ -191,6 +210,7 @@ class _WaterIntakeTabState extends State<WaterIntakeTab> {
   @override
   Widget build(BuildContext context) {
     final healthProfileProvider = context.watch<HealthProfileProvider>();
+    final languageProvider = context.watch<LanguageProvider>();
     final healthProfile = healthProfileProvider.profile;
     final dailyWaterGoal =
         healthProfile?['dailyWaterMl'] ?? 2500; // Default to 2.5L if no profile
@@ -199,10 +219,8 @@ class _WaterIntakeTabState extends State<WaterIntakeTab> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Water Intake',
-          style: GoogleFonts.poppins(
-            fontWeight: FontWeight.bold,
-          ),
+          languageProvider.getText('water_intake'),
+          style: GoogleFonts.poppins(fontWeight: FontWeight.bold),
         ),
         automaticallyImplyLeading: false,
       ),
@@ -218,13 +236,13 @@ class _WaterIntakeTabState extends State<WaterIntakeTab> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    'Error: ${provider.error}',
+                    '${languageProvider.getText('error')}: ${provider.error}',
                     style: const TextStyle(color: Colors.red),
                   ),
                   const SizedBox(height: 16),
                   ElevatedButton(
                     onPressed: () => provider.fetchWaterIntake(),
-                    child: const Text('Retry'),
+                    child: Text(languageProvider.getText('retry')),
                   ),
                 ],
               ),
@@ -256,7 +274,7 @@ class _WaterIntakeTabState extends State<WaterIntakeTab> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                'Today\'s Progress',
+                                languageProvider.getText('today_progress'),
                                 style: GoogleFonts.poppins(
                                   fontSize: 18,
                                   fontWeight: FontWeight.bold,
@@ -302,7 +320,11 @@ class _WaterIntakeTabState extends State<WaterIntakeTab> {
                                     ),
                                   ),
                                   Text(
-                                    'Completed',
+                                    progress >= 1.0
+                                        ? languageProvider.getText('completed')
+                                        : languageProvider.getText(
+                                            'in_progress',
+                                          ),
                                     style: GoogleFonts.poppins(
                                       color: textSecondaryColor,
                                     ),
@@ -319,7 +341,8 @@ class _WaterIntakeTabState extends State<WaterIntakeTab> {
                             alignment: WrapAlignment.center,
                             children: [
                               Tooltip(
-                                message: 'Add 250ml (1 cup)',
+                                message:
+                                    '${languageProvider.getText('add_water')} 250ml (1 cup)',
                                 child: _buildQuickAddButton(
                                   context,
                                   amount: 0.25,
@@ -327,7 +350,8 @@ class _WaterIntakeTabState extends State<WaterIntakeTab> {
                                 ),
                               ),
                               Tooltip(
-                                message: 'Add 500ml (2 cups)',
+                                message:
+                                    '${languageProvider.getText('add_water')} 500ml (2 cups)',
                                 child: _buildQuickAddButton(
                                   context,
                                   amount: 0.5,
@@ -335,7 +359,8 @@ class _WaterIntakeTabState extends State<WaterIntakeTab> {
                                 ),
                               ),
                               Tooltip(
-                                message: 'Add 750ml (3 cups)',
+                                message:
+                                    '${languageProvider.getText('add_water')} 750ml (3 cups)',
                                 child: _buildQuickAddButton(
                                   context,
                                   amount: 0.75,
@@ -352,7 +377,7 @@ class _WaterIntakeTabState extends State<WaterIntakeTab> {
 
                   // Recent Entries
                   Text(
-                    'Recent Entries',
+                    languageProvider.getText('recent_entries'),
                     style: GoogleFonts.poppins(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
@@ -363,10 +388,8 @@ class _WaterIntakeTabState extends State<WaterIntakeTab> {
                   if (provider.entries == null || provider.entries!.isEmpty)
                     Center(
                       child: Text(
-                        'No entries yet',
-                        style: GoogleFonts.poppins(
-                          color: textSecondaryColor,
-                        ),
+                        languageProvider.getText('no_entries_yet'),
+                        style: GoogleFonts.poppins(color: textSecondaryColor),
                       ),
                     )
                   else
@@ -382,11 +405,13 @@ class _WaterIntakeTabState extends State<WaterIntakeTab> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(vertical: 8.0),
+                              padding: const EdgeInsets.symmetric(
+                                vertical: 8.0,
+                              ),
                               child: Text(
-                                DateFormat('EEEE, MMMM d')
-                                    .format(DateTime.parse(date)),
+                                DateFormat(
+                                  'EEEE, MMMM d',
+                                ).format(DateTime.parse(date)),
                                 style: GoogleFonts.poppins(
                                   fontWeight: FontWeight.w500,
                                   color: textSecondaryColor,
@@ -394,8 +419,9 @@ class _WaterIntakeTabState extends State<WaterIntakeTab> {
                               ),
                             ),
                             ...entries.map((entry) {
-                              final localTime =
-                                  _toLocalTime(entry['createdAt']);
+                              final localTime = _toLocalTime(
+                                entry['createdAt'],
+                              );
                               return Card(
                                 margin: const EdgeInsets.only(bottom: 8),
                                 child: ListTile(
@@ -426,7 +452,9 @@ class _WaterIntakeTabState extends State<WaterIntakeTab> {
                                   trailing: IconButton(
                                     icon: const Icon(Icons.delete_outline),
                                     onPressed: () => _showDeleteConfirmation(
-                                        context, entry['id']),
+                                      context,
+                                      entry['id'],
+                                    ),
                                   ),
                                 ),
                               );
@@ -459,25 +487,15 @@ class _WaterIntakeTabState extends State<WaterIntakeTab> {
       style: ElevatedButton.styleFrom(
         backgroundColor: waterColor.withOpacity(0.1),
         foregroundColor: waterColor,
-        padding: const EdgeInsets.symmetric(
-          horizontal: 16,
-          vertical: 12,
-        ),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(8),
-        ),
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
           const Icon(Icons.water_drop, size: 20),
           const SizedBox(width: 8),
-          Text(
-            label,
-            style: GoogleFonts.poppins(
-              fontWeight: FontWeight.w500,
-            ),
-          ),
+          Text(label, style: GoogleFonts.poppins(fontWeight: FontWeight.w500)),
         ],
       ),
     );

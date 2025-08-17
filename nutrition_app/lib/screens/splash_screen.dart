@@ -46,6 +46,8 @@ class _SplashScreenState extends State<SplashScreen> {
     Navigator.pushReplacementNamed(context, '/dashboard');
   }
 
+// SplashScreen UI enhanced
+
   @override
   Widget build(BuildContext context) {
     final authProvider = Provider.of<AuthProvider>(context);
@@ -54,11 +56,11 @@ class _SplashScreenState extends State<SplashScreen> {
       body: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
             colors: [
-              primaryColor,
-              primaryColor.withOpacity(0.8),
+              primaryColor.withOpacity(0.9),
+              accentColor.withOpacity(0.7),
             ],
           ),
         ),
@@ -66,11 +68,22 @@ class _SplashScreenState extends State<SplashScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              // App logo
-              const Icon(
-                Icons.restaurant_menu,
-                size: 100,
-                color: Colors.white,
+              // Logo with animation
+              AnimatedOpacity(
+                opacity: 1,
+                duration: const Duration(milliseconds: 800),
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Colors.white.withOpacity(0.1),
+                    shape: BoxShape.circle,
+                  ),
+                  padding: const EdgeInsets.all(24),
+                  child: const Icon(
+                    Icons.local_dining,
+                    size: 80,
+                    color: Colors.white,
+                  ),
+                ),
               ),
               const SizedBox(height: 24),
 
@@ -79,70 +92,56 @@ class _SplashScreenState extends State<SplashScreen> {
                 'Nutrition Tracker',
                 style: GoogleFonts.poppins(
                   color: Colors.white,
-                  fontSize: 32,
-                  fontWeight: FontWeight.bold,
+                  fontSize: 34,
+                  fontWeight: FontWeight.w600,
+                  letterSpacing: 1.2,
                 ),
               ),
-
               const SizedBox(height: 8),
 
               // Tagline
               Text(
-                'Track Your Health Journey',
+                'Your wellness, one meal at a time',
                 style: GoogleFonts.poppins(
-                  color: Colors.white.withOpacity(0.9),
+                  color: Colors.white.withOpacity(0.85),
                   fontSize: 16,
                 ),
               ),
+              const SizedBox(height: 40),
 
-              const SizedBox(height: 48),
-
-              // Either show loader or buttons based on state
               _isChecking
-                  ? const CircularProgressIndicator(color: Colors.white)
-                  : Column(
-                      children: [
-                        if (authProvider.isAuthenticated)
-                          ElevatedButton(
-                            onPressed: _navigateToDashboard,
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.white,
-                              foregroundColor: primaryColor,
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 48, vertical: 12),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(30),
-                              ),
-                            ),
-                            child: Text(
-                              'Continue',
-                              style: GoogleFonts.poppins(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          )
-                        else
-                          ElevatedButton(
-                            onPressed: _navigateToLogin,
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.white,
-                              foregroundColor: primaryColor,
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 48, vertical: 12),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(30),
-                              ),
-                            ),
-                            child: Text(
-                              'Get Started',
-                              style: GoogleFonts.poppins(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
+                  ? const CircularProgressIndicator(
+                      color: Colors.white,
+                      strokeWidth: 2.5,
+                    )
+                  : AnimatedSwitcher(
+                      duration: const Duration(milliseconds: 300),
+                      child: ElevatedButton.icon(
+                        key: ValueKey(authProvider.isAuthenticated),
+                        onPressed: authProvider.isAuthenticated
+                            ? _navigateToDashboard
+                            : _navigateToLogin,
+                        icon: const Icon(Icons.arrow_forward_ios),
+                        label: Text(
+                          authProvider.isAuthenticated
+                              ? 'Continue'
+                              : 'Get Started',
+                          style: GoogleFonts.poppins(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
                           ),
-                      ],
+                        ),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.white,
+                          foregroundColor: primaryColor,
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 36, vertical: 14),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(24),
+                          ),
+                          elevation: 4,
+                        ),
+                      ),
                     ),
             ],
           ),

@@ -10,10 +10,25 @@ class FoodEntryService {
 
   FoodEntryService(this._apiClient);
 
-  Future<void> addFoodEntry({
-    String? foodName,
-    String? foodNameSomali,
-  }) async {
+  // Helper method to get image URL
+  String? getImageUrl(String? imagePath) {
+    if (imagePath == null || imagePath.isEmpty) {
+      print('DEBUG: imagePath is null or empty: $imagePath');
+      return null;
+    }
+
+    // Extract filename from path
+    final filename = imagePath.split('/').last;
+    // Use direct image route without API versioning
+    final baseUrl = _apiClient.baseUrl.replaceAll('/api/v1', '');
+    final imageUrl = '$baseUrl/images/$filename';
+    print('DEBUG: Converting imagePath: $imagePath to imageUrl: $imageUrl');
+    print('DEBUG: Base URL: $baseUrl');
+    print('DEBUG: Filename extracted: $filename');
+    return imageUrl;
+  }
+
+  Future<void> addFoodEntry({String? foodName, String? foodNameSomali}) async {
     try {
       final response = await _apiClient.request(
         method: 'POST',
@@ -65,9 +80,22 @@ class FoodEntryService {
 
       entries.forEach((date, entryList) {
         if (entryList is List) {
-          groupedEntries[date] = entryList
-              .map((entry) => Map<String, dynamic>.from(entry))
-              .toList();
+          groupedEntries[date] = entryList.map((entry) {
+            final Map<String, dynamic> mappedEntry = Map<String, dynamic>.from(
+              entry,
+            );
+            // Add image URL if imagePath exists
+            if (mappedEntry['imagePath'] != null) {
+              print('DEBUG: Found imagePath: ${mappedEntry['imagePath']}');
+              mappedEntry['imageUrl'] = getImageUrl(mappedEntry['imagePath']);
+              print('DEBUG: Generated imageUrl: ${mappedEntry['imageUrl']}');
+            } else {
+              print(
+                'DEBUG: No imagePath found for entry: ${mappedEntry['foodName']}',
+              );
+            }
+            return mappedEntry;
+          }).toList();
         }
       });
 
@@ -93,7 +121,8 @@ class FoodEntryService {
   }
 
   Future<List<Map<String, dynamic>>> addFoodEntryFromImage(
-      File imageFile) async {
+    File imageFile,
+  ) async {
     try {
       // Create multipart request
       final request = http.MultipartRequest(
@@ -145,7 +174,7 @@ class FoodEntryService {
         return [];
       }
 
-      // Transform the data to match the UI requirements
+      // Transform the data to match the UI requirements with all nutrition data
       final transformedEntries = foodEntries.map((item) {
         print('Processing item: $item'); // Debug log
         return {
@@ -156,6 +185,11 @@ class FoodEntryService {
           'protein': item['protein']?.toDouble() ?? 0.0,
           'carbs': item['carbohydrates']?.toDouble() ?? 0.0,
           'fat': item['fat']?.toDouble() ?? 0.0,
+          'vitaminA': item['vitaminA']?.toDouble() ?? 0.0,
+          'vitaminC': item['vitaminC']?.toDouble() ?? 0.0,
+          'calcium': item['calcium']?.toDouble() ?? 0.0,
+          'iron': item['iron']?.toDouble() ?? 0.0,
+          'imageUrl': getImageUrl(item['imagePath']),
         };
       }).toList();
 

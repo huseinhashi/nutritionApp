@@ -1,0 +1,17 @@
+{
+  "generated_at": "2025-08-02T12:52:37.904688",
+  "total_records": 5000,
+  "food_categories": [
+    "nut",
+    "dairy",
+    "fruit",
+    "grain",
+    "vegetable",
+    "protein"
+  ],
+  "total_foods": 30,
+  "portion_range": "25-500g",
+  "variation_factor": "\u00b15%",
+  "data_source": "USDA Standard Reference",
+  "accuracy_level": "Enhanced"
+}

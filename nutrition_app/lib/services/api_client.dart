@@ -10,19 +10,20 @@ class ApiClient {
   factory ApiClient() => _instance;
 
   ApiClient._internal() {
-    _dio = Dio(BaseOptions(
-      baseUrl: 'http://192.168.100.75:6400/api/v1',
-      validateStatus: (status) => true, // Handle all status codes ourselves
-      connectTimeout: const Duration(seconds: 60),
-      receiveTimeout: const Duration(seconds: 60),
-    ));
+    _dio = Dio(
+      BaseOptions(
+        baseUrl: 'http://192.168.235.32:6400/api/v1',
+        validateStatus: (status) => true, // Handle all status codes ourselves
+        connectTimeout: const Duration(seconds: 60),
+        receiveTimeout: const Duration(seconds: 60),
+      ),
+    );
 
     // Add logging interceptor in debug mode
     if (kDebugMode) {
-      _dio.interceptors.add(LogInterceptor(
-        requestBody: true,
-        responseBody: true,
-      ));
+      _dio.interceptors.add(
+        LogInterceptor(requestBody: true, responseBody: true),
+      );
     }
   }
 
@@ -61,20 +62,32 @@ class ApiClient {
           response = await _dio.get(path, queryParameters: queryParameters);
           break;
         case 'POST':
-          response = await _dio.post(path,
-              data: data, queryParameters: queryParameters);
+          response = await _dio.post(
+            path,
+            data: data,
+            queryParameters: queryParameters,
+          );
           break;
         case 'PUT':
-          response = await _dio.put(path,
-              data: data, queryParameters: queryParameters);
+          response = await _dio.put(
+            path,
+            data: data,
+            queryParameters: queryParameters,
+          );
           break;
         case 'PATCH':
-          response = await _dio.patch(path,
-              data: data, queryParameters: queryParameters);
+          response = await _dio.patch(
+            path,
+            data: data,
+            queryParameters: queryParameters,
+          );
           break;
         case 'DELETE':
-          response = await _dio.delete(path,
-              data: data, queryParameters: queryParameters);
+          response = await _dio.delete(
+            path,
+            data: data,
+            queryParameters: queryParameters,
+          );
           break;
         default:
           throw Exception('Unsupported method: $method');
@@ -107,11 +120,7 @@ class ApiClient {
       };
     }
 
-    return {
-      'success': true,
-      'data': response.data,
-      'message': 'Success',
-    };
+    return {'success': true, 'data': response.data, 'message': 'Success'};
   }
 
   // Process error response
@@ -126,7 +135,8 @@ class ApiClient {
       errorMessage = 'Server returned unexpected response. Please try again.';
     } else if (response.data is Map) {
       // Extract error message from response data
-      errorMessage = response.data['message'] ??
+      errorMessage =
+          response.data['message'] ??
           response.data['error'] ??
           'Error ${response.statusCode}';
     } else if (response.data is String) {
@@ -134,10 +144,7 @@ class ApiClient {
       errorMessage = response.data.toString();
     }
 
-    return {
-      'success': false,
-      'message': errorMessage,
-    };
+    return {'success': false, 'message': errorMessage};
   }
 
   // Process Dio exceptions
@@ -147,7 +154,8 @@ class ApiClient {
     if (error.response != null) {
       // Try to extract error message from response
       if (error.response!.data is Map) {
-        errorMessage = error.response!.data['message'] ??
+        errorMessage =
+            error.response!.data['message'] ??
             error.response!.data['error'] ??
             _getErrorMessage(error);
       } else if (error.response!.data is String) {
@@ -159,10 +167,7 @@ class ApiClient {
       errorMessage = _getErrorMessage(error);
     }
 
-    return {
-      'success': false,
-      'message': errorMessage,
-    };
+    return {'success': false, 'message': errorMessage};
   }
 
   // Get error message based on DioException type

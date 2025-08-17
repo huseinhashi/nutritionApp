@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'package:flutter/services.dart' show rootBundle;
+
 class NutritionResource {
   final String id;
   final String title;
@@ -22,79 +25,54 @@ class NutritionResource {
     required this.tags,
     required this.dateAdded,
   });
+
+  factory NutritionResource.fromJson(Map<String, dynamic> json) {
+    return NutritionResource(
+      id: json['id'],
+      title: json['title'],
+      description: json['description'] ?? '',
+      imageUrl: json['imageUrl'],
+      videoId: json['videoId'],
+      articleUrl: json['articleUrl'],
+      category: json['category'],
+      resourceType: json['resourceType'],
+      tags: (json['tags'] as List).map((e) => e.toString()).toList(),
+      dateAdded: DateTime.parse(json['dateAdded']),
+    );
+  }
 }
 
-// Sample data for nutrition resources
-final List<NutritionResource> nutritionResources = [
-  // Videos
-  NutritionResource(
-    id: 'v1',
-    title: 'Cuntooyinka La Isticmaalo Si Looga Faaiideysto Caafimaadkaaga',
-    description:
-        'Waxaa lagu sharxi doonaa sida loo isticmaalo cuntooyinka si looga faaiideysto caafimaadkaaga.',
-    videoId: 'I1dv2bOYhds',
-    category: 'weight_loss',
-    resourceType: 'video',
-    tags: ['weight_loss', 'healthy_eating', 'nutrition'],
-    dateAdded: DateTime(2024, 3, 1),
-  ),
-  NutritionResource(
-    id: 'v2',
-    title: 'Sida Looga Dhigto Cuntadaada Mid La Isticmaalo',
-    description:
-        'Waxaa lagu sharxi doonaa sida loo sameeyo cuntooyin la isticmaalo oo la isticmaalo.',
-    videoId: 'I1dv2bOYhds',
-    category: 'muscle_gain',
-    resourceType: 'video',
-    tags: ['muscle_gain', 'protein', 'workout'],
-    dateAdded: DateTime(2024, 3, 2),
-  ),
-  NutritionResource(
-    id: 'v3',
-    title: 'Healthy Meal Planning for Weight Management',
-    description:
-        'Learn how to plan your meals for effective weight management.',
-    videoId: 'I1dv2bOYhds',
-    category: 'weight_loss',
-    resourceType: 'video',
-    tags: ['weight_loss', 'meal_planning', 'healthy_eating'],
-    dateAdded: DateTime(2024, 3, 3),
-  ),
+// Global variable to store loaded resources
+List<NutritionResource> _nutritionResources = [];
 
-  // Articles
-  NutritionResource(
-    id: 'a1',
-    title: 'Muhiimadda Cuntada La Isticmaalo',
-    description:
-        'Maqaal ku saabsan muhiimadda cuntada la isticmaalo iyo sida ay u saameeyaan caafimaadkaaga.',
-    articleUrl: 'https://jn.nutrition.org/',
-    category: 'healthy_eating',
-    resourceType: 'article',
-    tags: ['healthy_eating', 'nutrition', 'wellness'],
-    dateAdded: DateTime(2024, 3, 1),
-  ),
-  NutritionResource(
-    id: 'a2',
-    title: 'Sida Looga Dhigto Cuntadaada Mid La Isticmaalo',
-    description:
-        'Maqaal ku saabsan sida loo sameeyo cuntooyin la isticmaalo oo la isticmaalo.',
-    articleUrl: 'https://pmc.ncbi.nlm.nih.gov/articles/PMC9785741/',
-    category: 'muscle_gain',
-    resourceType: 'article',
-    tags: ['muscle_gain', 'protein', 'nutrition'],
-    dateAdded: DateTime(2024, 3, 2),
-  ),
-  NutritionResource(
-    id: 'a3',
-    title: 'Weight Loss Strategies That Work',
-    description: 'Evidence-based strategies for sustainable weight loss.',
-    articleUrl: 'https://example.com/weight-loss',
-    category: 'weight_loss',
-    resourceType: 'article',
-    tags: ['weight_loss', 'diet', 'exercise'],
-    dateAdded: DateTime(2024, 3, 3),
-  ),
-];
+// Load nutrition resources from JSON file
+Future<List<NutritionResource>> loadNutritionResources() async {
+  if (_nutritionResources.isNotEmpty) {
+    return _nutritionResources;
+  }
+
+  try {
+    final raw = await rootBundle.loadString(
+      'assets/data/nutrition_resources.json',
+    );
+    final decoded = json.decode(raw) as Map<String, dynamic>;
+    final list = (decoded['resources'] as List)
+        .map((e) => NutritionResource.fromJson(e as Map<String, dynamic>))
+        .toList();
+
+    // Sort newest first
+    list.sort((a, b) => b.dateAdded.compareTo(a.dateAdded));
+
+    _nutritionResources = list;
+    return list;
+  } catch (e) {
+    print('Error loading nutrition resources: $e');
+    return [];
+  }
+}
+
+// Get all loaded resources
+List<NutritionResource> get nutritionResources => _nutritionResources;
 
 // Available categories
 final List<String> resourceCategories = [
@@ -128,14 +106,14 @@ String getCategoryDisplayName(String category) {
 
 // Helper function to get resources by category
 List<NutritionResource> getResourcesByCategory(String category) {
-  return nutritionResources
+  return _nutritionResources
       .where((resource) => resource.category == category)
       .toList();
 }
 
 // Helper function to get resources by type
 List<NutritionResource> getResourcesByType(String type) {
-  return nutritionResources
+  return _nutritionResources
       .where((resource) => resource.resourceType == type)
       .toList();
 }
@@ -143,7 +121,7 @@ List<NutritionResource> getResourcesByType(String type) {
 // Helper function to get resources by search query
 List<NutritionResource> searchResources(String query) {
   final lowercaseQuery = query.toLowerCase();
-  return nutritionResources.where((resource) {
+  return _nutritionResources.where((resource) {
     return resource.title.toLowerCase().contains(lowercaseQuery) ||
         resource.description.toLowerCase().contains(lowercaseQuery) ||
         resource.tags.any((tag) => tag.toLowerCase().contains(lowercaseQuery));
@@ -156,7 +134,7 @@ List<NutritionResource> getFilteredResources({
   String? type,
   String? searchQuery,
 }) {
-  var resources = nutritionResources;
+  var resources = _nutritionResources;
 
   if (category != null) {
     resources = resources.where((r) => r.category == category).toList();
@@ -167,9 +145,9 @@ List<NutritionResource> getFilteredResources({
   }
 
   if (searchQuery != null && searchQuery.isNotEmpty) {
-    resources = searchResources(searchQuery)
-        .where((r) => resources.contains(r))
-        .toList();
+    resources = searchResources(
+      searchQuery,
+    ).where((r) => resources.contains(r)).toList();
   }
 
   return resources;

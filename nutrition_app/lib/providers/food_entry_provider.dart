@@ -38,6 +38,12 @@ class FoodEntryProvider with ChangeNotifier {
     );
   }
 
+  // Get today's total calories
+  double getTodayTotalCalories() {
+    final today = DateTime.now().toIso8601String().split('T')[0];
+    return getTotalCaloriesForDate(today);
+  }
+
   // Calculate total macros for a specific date
   Map<String, double> getTotalMacrosForDate(String date) {
     if (!_entries.containsKey(date)) {
@@ -57,10 +63,7 @@ class FoodEntryProvider with ChangeNotifier {
   }
 
   // Add a new food entry
-  Future<void> addFoodEntry({
-    String? foodName,
-    String? foodNameSomali,
-  }) async {
+  Future<void> addFoodEntry({String? foodName, String? foodNameSomali}) async {
     _isLoading = true;
     _error = null;
     notifyListeners();
@@ -80,10 +83,7 @@ class FoodEntryProvider with ChangeNotifier {
   }
 
   // Fetch food entries
-  Future<void> fetchFoodEntries({
-    String? startDate,
-    String? endDate,
-  }) async {
+  Future<void> fetchFoodEntries({String? startDate, String? endDate}) async {
     _isLoading = true;
     _error = null;
     notifyListeners();
@@ -140,7 +140,8 @@ class FoodEntryProvider with ChangeNotifier {
 
   // Add food entry from image
   Future<List<Map<String, dynamic>>> addFoodEntryFromImage(
-      File imageFile) async {
+    File imageFile,
+  ) async {
     _isLoading = true;
     _error = null;
     notifyListeners();

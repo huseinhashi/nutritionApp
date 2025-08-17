@@ -1,0 +1,561 @@
+# NUTRITION ANALYSIS JUPYTER NOTEBOOK CELLS
+# Copy and paste each cell section into your Jupyter notebook
+
+# ============================================================================
+# CELL 1: Markdown - Title and Overview
+# ============================================================================
+# Nutrition Analysis and Machine Learning Project
+
+## Overview
+This notebook provides comprehensive analysis of nutrition data using machine learning models to predict various nutritional components including calories, macronutrients, vitamins, and minerals.
+
+### Objectives:
+- Analyze nutrition dataset characteristics
+- Train and evaluate 13 different nutrition prediction models
+- Visualize data distributions and model performance
+- Compare model accuracies across different nutritional components
+- Provide insights for nutrition tracking applications
+
+# ============================================================================
+# CELL 2: Markdown - Import Libraries Section
+# ============================================================================
+## Import Necessary Libraries
+
+# ============================================================================
+# CELL 3: Code - Import Libraries
+# ============================================================================
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+from sklearn.preprocessing import LabelEncoder, StandardScaler
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV, KFold
+from sklearn.ensemble import RandomForestRegressor
+from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
+import joblib
+import os
+import json
+from typing import Dict, List, Optional, Tuple
+import warnings
+warnings.filterwarnings('ignore')
+
+# Set style for better visualizations
+plt.style.use('seaborn-v0_8')
+sns.set_palette("husl")
+
+# Configure display options
+pd.set_option('display.max_columns', None)
+pd.set_option('display.width', None)
+pd.set_option('display.max_colwidth', None)
+
+# ============================================================================
+# CELL 4: Markdown - Data Loading Section
+# ============================================================================
+## Data Loading and Initial Exploration
+
+# ============================================================================
+# CELL 5: Code - Load Dataset
+# ============================================================================
+# Load the nutrition dataset
+df = pd.read_csv('nutrition_dataset.csv')
+
+print("Dataset Shape:", df.shape)
+print("\nColumns:", list(df.columns))
+print("\nFirst few rows:")
+df.head()
+
+# ============================================================================
+# CELL 6: Code - Basic Dataset Info
+# ============================================================================
+# Basic dataset information
+print("Dataset Info:")
+df.info()
+
+print("\nMissing Values:")
+missing_values = df.isnull().sum()
+print(missing_values[missing_values > 0])
+
+# ============================================================================
+# CELL 7: Markdown - Data Visualization Section
+# ============================================================================
+## Data Visualization and Analysis
+
+# ============================================================================
+# CELL 8: Code - Food Categories Distribution
+# ============================================================================
+# 1. Food Categories Distribution
+plt.figure(figsize=(12, 6))
+food_category_counts = df['food_category'].value_counts()
+sns.barplot(x=food_category_counts.values, y=food_category_counts.index, palette='viridis')
+plt.title('Distribution of Food Categories', fontsize=16, fontweight='bold')
+plt.xlabel('Number of Food Items', fontsize=12)
+plt.ylabel('Food Category', fontsize=12)
+plt.tight_layout()
+plt.savefig('food_categories_distribution.png', dpi=300, bbox_inches='tight')
+plt.show()
+
+# ============================================================================
+# CELL 9: Code - Calories Distribution
+# ============================================================================
+# 2. Calories Distribution
+plt.figure(figsize=(10, 6))
+sns.histplot(df['calories'], bins=50, kde=True, color='skyblue')
+plt.title('Distribution of Calories per 100g', fontsize=16, fontweight='bold')
+plt.xlabel('Calories', fontsize=12)
+plt.ylabel('Frequency', fontsize=12)
+plt.axvline(df['calories'].mean(), color='red', linestyle='--', label=f'Mean: {df["calories"].mean():.1f}')
+plt.axvline(df['calories'].median(), color='green', linestyle='--', label=f'Median: {df["calories"].median():.1f}')
+plt.legend()
+plt.tight_layout()
+plt.savefig('calories_distribution.png', dpi=300, bbox_inches='tight')
+plt.show()
+
+# ============================================================================
+# CELL 10: Code - Macronutrients Distribution
+# ============================================================================
+# 3. Macronutrients Distribution
+fig, axes = plt.subplots(2, 2, figsize=(15, 10))
+fig.suptitle('Macronutrients Distribution', fontsize=16, fontweight='bold')
+
+# Protein
+sns.histplot(df['protein'], bins=30, kde=True, ax=axes[0,0], color='red')
+axes[0,0].set_title('Protein Distribution')
+axes[0,0].set_xlabel('Protein (g)')
+
+# Fat
+sns.histplot(df['fat'], bins=30, kde=True, ax=axes[0,1], color='orange')
+axes[0,1].set_title('Fat Distribution')
+axes[0,1].set_xlabel('Fat (g)')
+
+# Carbohydrates
+sns.histplot(df['carbohydrates'], bins=30, kde=True, ax=axes[1,0], color='green')
+axes[1,0].set_title('Carbohydrates Distribution')
+axes[1,0].set_xlabel('Carbohydrates (g)')
+
+# Fiber
+sns.histplot(df['fiber'], bins=30, kde=True, ax=axes[1,1], color='purple')
+axes[1,1].set_title('Fiber Distribution')
+axes[1,1].set_xlabel('Fiber (g)')
+
+plt.tight_layout()
+plt.savefig('macronutrients_distribution.png', dpi=300, bbox_inches='tight')
+plt.show()
+
+# ============================================================================
+# CELL 11: Code - Vitamins Distribution
+# ============================================================================
+# 4. Vitamins Distribution
+fig, axes = plt.subplots(2, 2, figsize=(15, 10))
+fig.suptitle('Vitamins Distribution', fontsize=16, fontweight='bold')
+
+vitamins = ['vitamin_a', 'vitamin_c', 'vitamin_d', 'vitamin_e']
+colors = ['yellow', 'orange', 'blue', 'green']
+
+for i, (vitamin, color) in enumerate(zip(vitamins, colors)):
+    row, col = i // 2, i % 2
+    sns.histplot(df[vitamin], bins=30, kde=True, ax=axes[row, col], color=color)
+    axes[row, col].set_title(f'{vitamin.replace("_", " ").title()} Distribution')
+    axes[row, col].set_xlabel(f'{vitamin.replace("_", " ").title()} (mg)')
+
+plt.tight_layout()
+plt.savefig('vitamins_distribution.png', dpi=300, bbox_inches='tight')
+plt.show()
+
+# ============================================================================
+# CELL 12: Code - Minerals Distribution
+# ============================================================================
+# 5. Minerals Distribution
+fig, axes = plt.subplots(2, 2, figsize=(15, 10))
+fig.suptitle('Minerals Distribution', fontsize=16, fontweight='bold')
+
+minerals = ['calcium', 'iron', 'potassium', 'sodium']
+colors = ['gray', 'brown', 'purple', 'pink']
+
+for i, (mineral, color) in enumerate(zip(minerals, colors)):
+    row, col = i // 2, i % 2
+    sns.histplot(df[mineral], bins=30, kde=True, ax=axes[row, col], color=color)
+    axes[row, col].set_title(f'{mineral.title()} Distribution')
+    axes[row, col].set_xlabel(f'{mineral.title()} (mg)')
+
+plt.tight_layout()
+plt.savefig('minerals_distribution.png', dpi=300, bbox_inches='tight')
+plt.show()
+
+# ============================================================================
+# CELL 13: Code - Correlation Heatmap
+# ============================================================================
+# 6. Correlation Heatmap
+nutrition_columns = ['calories', 'protein', 'fat', 'carbohydrates', 'fiber', 
+                    'vitamin_a', 'vitamin_c', 'vitamin_d', 'vitamin_e',
+                    'calcium', 'iron', 'potassium', 'sodium']
+
+correlation_matrix = df[nutrition_columns].corr()
+
+plt.figure(figsize=(12, 10))
+mask = np.triu(np.ones_like(correlation_matrix, dtype=bool))
+sns.heatmap(correlation_matrix, mask=mask, annot=True, cmap='coolwarm', center=0,
+            square=True, linewidths=0.5, cbar_kws={"shrink": .8})
+plt.title('Nutrition Components Correlation Matrix', fontsize=16, fontweight='bold')
+plt.tight_layout()
+plt.savefig('nutrition_correlation_heatmap.png', dpi=300, bbox_inches='tight')
+plt.show()
+
+# ============================================================================
+# CELL 14: Code - Top Foods by Calories
+# ============================================================================
+# 7. Top Foods by Calories
+plt.figure(figsize=(12, 8))
+top_calorie_foods = df.nlargest(15, 'calories')[['food_name', 'calories']]
+sns.barplot(data=top_calorie_foods, x='calories', y='food_name', palette='Reds_r')
+plt.title('Top 15 Foods by Calories', fontsize=16, fontweight='bold')
+plt.xlabel('Calories per 100g', fontsize=12)
+plt.ylabel('Food Name', fontsize=12)
+plt.tight_layout()
+plt.savefig('top_calorie_foods.png', dpi=300, bbox_inches='tight')
+plt.show()
+
+# ============================================================================
+# CELL 15: Code - Average Nutrition by Food Category
+# ============================================================================
+# 8. Average Nutrition by Food Category
+category_nutrition = df.groupby('food_category')[nutrition_columns].mean()
+
+fig, axes = plt.subplots(2, 2, figsize=(20, 12))
+fig.suptitle('Average Nutrition Content by Food Category', fontsize=16, fontweight='bold')
+
+# Calories by category
+sns.barplot(data=df, x='food_category', y='calories', ax=axes[0,0], palette='viridis')
+axes[0,0].set_title('Average Calories by Category')
+axes[0,0].tick_params(axis='x', rotation=45)
+
+# Protein by category
+sns.barplot(data=df, x='food_category', y='protein', ax=axes[0,1], palette='viridis')
+axes[0,1].set_title('Average Protein by Category')
+axes[0,1].tick_params(axis='x', rotation=45)
+
+# Fat by category
+sns.barplot(data=df, x='food_category', y='fat', ax=axes[1,0], palette='viridis')
+axes[1,0].set_title('Average Fat by Category')
+axes[1,0].tick_params(axis='x', rotation=45)
+
+# Carbohydrates by category
+sns.barplot(data=df, x='food_category', y='carbohydrates', ax=axes[1,1], palette='viridis')
+axes[1,1].set_title('Average Carbohydrates by Category')
+axes[1,1].tick_params(axis='x', rotation=45)
+
+plt.tight_layout()
+plt.savefig('nutrition_by_category.png', dpi=300, bbox_inches='tight')
+plt.show()
+
+# ============================================================================
+# CELL 16: Markdown - ML Model Training Section
+# ============================================================================
+## Machine Learning Model Training and Evaluation
+
+# ============================================================================
+# CELL 17: Code - Data Preprocessing for ML
+# ============================================================================
+# Data Preprocessing for ML
+def preprocess_data(df):
+    """Preprocess data for machine learning"""
+    # Handle missing values
+    df = df.fillna(0)
+    
+    # Convert portion_size to numeric
+    if 'portion_size' in df.columns:
+        df['portion_size'] = pd.to_numeric(df['portion_size'], errors='coerce').fillna(100)
+    
+    # Encode categorical variables
+    categorical_columns = ['food_name', 'food_category', 'portion_unit']
+    label_encoders = {}
+    
+    for col in categorical_columns:
+        if col in df.columns:
+            le = LabelEncoder()
+            df[f'{col}_encoded'] = le.fit_transform(df[col].astype(str))
+            label_encoders[col] = le
+    
+    # Select features
+    feature_columns = [
+        'portion_size', 'food_name_encoded', 'food_category_encoded', 
+        'portion_unit_encoded'
+    ]
+    
+    available_features = [col for col in feature_columns if col in df.columns]
+    
+    X = df[available_features]
+    y = df[nutrition_columns]
+    
+    return X, y, label_encoders
+
+# Preprocess data
+X, y, label_encoders = preprocess_data(df)
+print(f"Features shape: {X.shape}")
+print(f"Targets shape: {y.shape}")
+
+# ============================================================================
+# CELL 18: Code - Split Data and Scale Features
+# ============================================================================
+# Split data and scale features
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+scaler = StandardScaler()
+X_train_scaled = scaler.fit_transform(X_train)
+X_test_scaled = scaler.transform(X_test)
+
+print(f"Training set: {X_train.shape}")
+print(f"Testing set: {X_test.shape}")
+
+# ============================================================================
+# CELL 19: Code - Train Models for Each Nutrition Target
+# ============================================================================
+# Train models for each nutrition target
+models = {}
+results = {}
+
+for target in nutrition_columns:
+    print(f"Training model for {target}...")
+    
+    # Train Random Forest model
+    model = RandomForestRegressor(n_estimators=100, random_state=42)
+    model.fit(X_train_scaled, y_train[target])
+    
+    # Make predictions
+    y_pred = model.predict(X_test_scaled)
+    
+    # Calculate metrics
+    mae = mean_absolute_error(y_test[target], y_pred)
+    mse = mean_squared_error(y_test[target], y_pred)
+    rmse = np.sqrt(mse)
+    r2 = r2_score(y_test[target], y_pred)
+    
+    # Store results
+    models[target] = model
+    results[target] = {
+        'MAE': mae,
+        'MSE': mse,
+        'RMSE': rmse,
+        'R2': r2
+    }
+    
+    print(f"  R² Score: {r2:.4f}")
+    print(f"  RMSE: {rmse:.4f}")
+    print(f"  MAE: {mae:.4f}")
+    print("-" * 50)
+
+# ============================================================================
+# CELL 20: Markdown - Model Performance Visualization Section
+# ============================================================================
+## Model Performance Visualization
+
+# ============================================================================
+# CELL 21: Code - Model Performance Comparison
+# ============================================================================
+# 9. Model Performance Comparison
+results_df = pd.DataFrame(results).T
+
+fig, axes = plt.subplots(2, 2, figsize=(15, 10))
+fig.suptitle('Model Performance Metrics', fontsize=16, fontweight='bold')
+
+# R² Scores
+sns.barplot(x=results_df.index, y=results_df['R2'], ax=axes[0,0], palette='viridis')
+axes[0,0].set_title('R² Scores by Nutrition Component')
+axes[0,0].tick_params(axis='x', rotation=45)
+axes[0,0].set_ylabel('R² Score')
+
+# RMSE
+sns.barplot(x=results_df.index, y=results_df['RMSE'], ax=axes[0,1], palette='Reds_r')
+axes[0,1].set_title('RMSE by Nutrition Component')
+axes[0,1].tick_params(axis='x', rotation=45)
+axes[0,1].set_ylabel('RMSE')
+
+# MAE
+sns.barplot(x=results_df.index, y=results_df['MAE'], ax=axes[1,0], palette='Blues_r')
+axes[1,0].set_title('MAE by Nutrition Component')
+axes[1,0].tick_params(axis='x', rotation=45)
+axes[1,0].set_ylabel('MAE')
+
+# MSE
+sns.barplot(x=results_df.index, y=results_df['MSE'], ax=axes[1,1], palette='Greens_r')
+axes[1,1].set_title('MSE by Nutrition Component')
+axes[1,1].tick_params(axis='x', rotation=45)
+axes[1,1].set_ylabel('MSE')
+
+plt.tight_layout()
+plt.savefig('model_performance_comparison.png', dpi=300, bbox_inches='tight')
+plt.show()
+
+# ============================================================================
+# CELL 22: Code - R² Score Comparison
+# ============================================================================
+# 10. R² Score Comparison (Main Performance Metric)
+plt.figure(figsize=(12, 6))
+r2_scores = results_df['R2'].sort_values(ascending=True)
+colors = ['red' if x < 0.5 else 'orange' if x < 0.7 else 'green' for x in r2_scores]
+
+bars = plt.barh(range(len(r2_scores)), r2_scores, color=colors)
+plt.yticks(range(len(r2_scores)), r2_scores.index)
+plt.xlabel('R² Score', fontsize=12)
+plt.title('Model Performance by R² Score', fontsize=16, fontweight='bold')
+
+# Add value labels on bars
+for i, (bar, score) in enumerate(zip(bars, r2_scores)):
+    plt.text(bar.get_width() + 0.01, bar.get_y() + bar.get_height()/2, 
+             f'{score:.3f}', ha='left', va='center', fontweight='bold')
+
+# Add performance threshold lines
+plt.axvline(x=0.5, color='red', linestyle='--', alpha=0.7, label='Poor (< 0.5)')
+plt.axvline(x=0.7, color='orange', linestyle='--', alpha=0.7, label='Fair (0.5-0.7)')
+plt.axvline(x=0.8, color='green', linestyle='--', alpha=0.7, label='Good (> 0.8)')
+plt.legend()
+
+plt.tight_layout()
+plt.savefig('r2_score_comparison.png', dpi=300, bbox_inches='tight')
+plt.show()
+
+# ============================================================================
+# CELL 23: Code - Actual vs Predicted Values
+# ============================================================================
+# 11. Actual vs Predicted Values for Top Performing Models
+top_models = results_df['R2'].nlargest(4).index
+
+fig, axes = plt.subplots(2, 2, figsize=(15, 10))
+fig.suptitle('Actual vs Predicted Values (Top 4 Models)', fontsize=16, fontweight='bold')
+
+for i, target in enumerate(top_models):
+    row, col = i // 2, i % 2
+    
+    y_pred = models[target].predict(X_test_scaled)
+    
+    axes[row, col].scatter(y_test[target], y_pred, alpha=0.6, color='blue')
+    axes[row, col].plot([y_test[target].min(), y_test[target].max()], 
+                       [y_test[target].min(), y_test[target].max()], 
+                       'r--', lw=2)
+    
+    axes[row, col].set_xlabel('Actual Values')
+    axes[row, col].set_ylabel('Predicted Values')
+    axes[row, col].set_title(f'{target.replace("_", " ").title()} (R² = {results[target]["R2"]:.3f})')
+    
+    # Add R² text
+    axes[row, col].text(0.05, 0.95, f'R² = {results[target]["R2"]:.3f}', 
+                       transform=axes[row, col].transAxes, 
+                       bbox=dict(boxstyle="round,pad=0.3", facecolor="yellow", alpha=0.7))
+
+plt.tight_layout()
+plt.savefig('actual_vs_predicted_top_models.png', dpi=300, bbox_inches='tight')
+plt.show()
+
+# ============================================================================
+# CELL 24: Code - Feature Importance Analysis
+# ============================================================================
+# 12. Feature Importance Analysis
+fig, axes = plt.subplots(2, 2, figsize=(15, 10))
+fig.suptitle('Feature Importance for Top Models', fontsize=16, fontweight='bold')
+
+feature_names = X.columns
+
+for i, target in enumerate(top_models):
+    row, col = i // 2, i % 2
+    
+    importance = models[target].feature_importances_
+    indices = np.argsort(importance)[::-1]
+    
+    axes[row, col].bar(range(len(importance)), importance[indices])
+    axes[row, col].set_xticks(range(len(importance)))
+    axes[row, col].set_xticklabels([feature_names[i] for i in indices], rotation=45)
+    axes[row, col].set_title(f'{target.replace("_", " ").title()} Feature Importance')
+    axes[row, col].set_ylabel('Importance')
+
+plt.tight_layout()
+plt.savefig('feature_importance_analysis.png', dpi=300, bbox_inches='tight')
+plt.show()
+
+# ============================================================================
+# CELL 25: Markdown - Model Performance Summary Section
+# ============================================================================
+## Model Performance Summary
+
+# ============================================================================
+# CELL 26: Code - Display Comprehensive Results Table
+# ============================================================================
+# Display comprehensive results table
+print("Model Performance Summary:")
+print("=" * 80)
+print(f"{'Component':<15} {'R² Score':<10} {'RMSE':<12} {'MAE':<12} {'MSE':<12}")
+print("-" * 80)
+
+for target in nutrition_columns:
+    r2 = results[target]['R2']
+    rmse = results[target]['RMSE']
+    mae = results[target]['MAE']
+    mse = results[target]['MSE']
+    
+    print(f"{target:<15} {r2:<10.4f} {rmse:<12.4f} {mae:<12.4f} {mse:<12.4f}")
+
+print("=" * 80)
+
+# Performance statistics
+print(f"\nPerformance Statistics:")
+print(f"Average R² Score: {results_df['R2'].mean():.4f}")
+print(f"Best R² Score: {results_df['R2'].max():.4f} ({results_df['R2'].idxmax()})")
+print(f"Worst R² Score: {results_df['R2'].min():.4f} ({results_df['R2'].idxmin()})")
+print(f"Models with R² > 0.7: {(results_df['R2'] > 0.7).sum()}")
+print(f"Models with R² > 0.5: {(results_df['R2'] > 0.5).sum()}")
+
+# ============================================================================
+# CELL 27: Markdown - Save Models Section
+# ============================================================================
+## Save Models and Results
+
+# ============================================================================
+# CELL 28: Code - Save Models and Results
+# ============================================================================
+# Save models and results
+import joblib
+
+# Create models directory if it doesn't exist
+os.makedirs('models', exist_ok=True)
+
+# Save each model
+for target, model in models.items():
+    joblib.dump(model, f'models/{target}_model.pkl')
+
+# Save scaler and label encoders
+joblib.dump(scaler, 'models/scaler.pkl')
+joblib.dump(label_encoders, 'models/label_encoders.pkl')
+
+# Save feature names
+with open('models/feature_names.json', 'w') as f:
+    json.dump(list(X.columns), f)
+
+# Save results
+results_df.to_csv('model_performance_results.csv')
+
+print("Models and results saved successfully!")
+
+# ============================================================================
+# CELL 29: Markdown - Conclusions Section
+# ============================================================================
+## Conclusions and Insights
+
+### Key Findings:
+1. **Model Performance**: The Random Forest models show varying performance across different nutrition components
+2. **Best Predictors**: [List the best performing models]
+3. **Challenging Predictors**: [List the most challenging models]
+4. **Feature Importance**: [Key insights about feature importance]
+
+### Recommendations:
+1. **Model Improvements**: Consider ensemble methods or hyperparameter tuning for better performance
+2. **Feature Engineering**: Explore additional features that might improve prediction accuracy
+3. **Data Quality**: Ensure high-quality, consistent data for better model training
+4. **Real-world Application**: These models can be integrated into nutrition tracking applications
+
+### Next Steps:
+1. Implement hyperparameter tuning using GridSearchCV
+2. Explore other algorithms (XGBoost, LightGBM)
+3. Create a web API for real-time predictions
+4. Develop a mobile app interface for nutrition tracking
+
+# ============================================================================
+# END OF NOTEBOOK CELLS
+# ============================================================================

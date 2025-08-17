@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:nutrition_app/utils/AppColor.dart';
 import 'package:nutrition_app/utils/nutrition_resources.dart';
+import 'package:nutrition_app/providers/language_provider.dart';
+import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
@@ -19,11 +21,34 @@ class _ResourcesTabState extends State<ResourcesTab>
   String _searchQuery = '';
   bool _isSearching = false;
   String? _selectedCategory;
+  bool _isLoading = true;
+  String? _error;
 
   @override
   void initState() {
     super.initState();
     _tabController = TabController(length: 2, vsync: this);
+    _loadResources();
+  }
+
+  Future<void> _loadResources() async {
+    try {
+      setState(() {
+        _isLoading = true;
+        _error = null;
+      });
+
+      await loadNutritionResources();
+
+      setState(() {
+        _isLoading = false;
+      });
+    } catch (e) {
+      setState(() {
+        _isLoading = false;
+        _error = e.toString();
+      });
+    }
   }
 
   @override
@@ -37,7 +62,11 @@ class _ResourcesTabState extends State<ResourcesTab>
     if (!await launchUrl(Uri.parse(url))) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Could not open the link')),
+          SnackBar(
+            content: Text(
+              context.read<LanguageProvider>().getText('could_not_open_link'),
+            ),
+          ),
         );
       }
     }
@@ -45,13 +74,13 @@ class _ResourcesTabState extends State<ResourcesTab>
 
   @override
   Widget build(BuildContext context) {
+    final languageProvider = context.watch<LanguageProvider>();
+
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Resources',
-          style: GoogleFonts.poppins(
-            fontWeight: FontWeight.bold,
-          ),
+          languageProvider.getText('resources'),
+          style: GoogleFonts.poppins(fontWeight: FontWeight.bold),
         ),
         automaticallyImplyLeading: false,
         bottom: TabBar(
@@ -64,7 +93,7 @@ class _ResourcesTabState extends State<ResourcesTab>
                   const Icon(Icons.article),
                   const SizedBox(width: 8),
                   Text(
-                    'Articles',
+                    languageProvider.getText('articles'),
                     style: GoogleFonts.poppins(),
                   ),
                 ],
@@ -77,7 +106,7 @@ class _ResourcesTabState extends State<ResourcesTab>
                   const Icon(Icons.video_library),
                   const SizedBox(width: 8),
                   Text(
-                    'Videos',
+                    languageProvider.getText('videos'),
                     style: GoogleFonts.poppins(),
                   ),
                 ],
@@ -100,86 +129,108 @@ class _ResourcesTabState extends State<ResourcesTab>
           ),
         ],
       ),
-      body: Column(
-        children: [
-          if (_isSearching)
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: TextField(
-                controller: _searchController,
-                decoration: InputDecoration(
-                  hintText: 'Search resources...',
-                  prefixIcon: const Icon(Icons.search),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
+      body: _isLoading
+          ? const Center(child: CircularProgressIndicator())
+          : _error != null
+          ? Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    '${languageProvider.getText('error')}: $_error',
+                    style: GoogleFonts.poppins(color: Colors.red),
+                    textAlign: TextAlign.center,
                   ),
-                  contentPadding: const EdgeInsets.symmetric(
-                    horizontal: 16,
-                    vertical: 12,
+                  const SizedBox(height: 16),
+                  ElevatedButton(
+                    onPressed: _loadResources,
+                    child: Text(languageProvider.getText('retry')),
                   ),
-                ),
-                onChanged: (value) {
-                  setState(() {
-                    _searchQuery = value;
-                  });
-                },
+                ],
               ),
-            ),
-          // Category Filter
-          Container(
-            height: 50,
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: ListView.builder(
-              scrollDirection: Axis.horizontal,
-              itemCount: resourceCategories.length + 1, // +1 for "All" option
-              itemBuilder: (context, index) {
-                if (index == 0) {
-                  return Padding(
-                    padding: const EdgeInsets.only(right: 8),
-                    child: FilterChip(
-                      label: const Text('All'),
-                      selected: _selectedCategory == null,
-                      onSelected: (selected) {
+            )
+          : Column(
+              children: [
+                if (_isSearching)
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: TextField(
+                      controller: _searchController,
+                      decoration: InputDecoration(
+                        hintText: languageProvider.getText('search_resources'),
+                        prefixIcon: const Icon(Icons.search),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        contentPadding: const EdgeInsets.symmetric(
+                          horizontal: 16,
+                          vertical: 12,
+                        ),
+                      ),
+                      onChanged: (value) {
                         setState(() {
-                          _selectedCategory = null;
+                          _searchQuery = value;
                         });
                       },
                     ),
-                  );
-                }
-                final category = resourceCategories[index - 1];
-                return Padding(
-                  padding: const EdgeInsets.only(right: 8),
-                  child: FilterChip(
-                    label: Text(getCategoryDisplayName(category)),
-                    selected: _selectedCategory == category,
-                    onSelected: (selected) {
-                      setState(() {
-                        _selectedCategory = selected ? category : null;
-                      });
+                  ),
+                // Category Filter
+                Container(
+                  height: 50,
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemCount:
+                        resourceCategories.length + 1, // +1 for "All" option
+                    itemBuilder: (context, index) {
+                      if (index == 0) {
+                        return Padding(
+                          padding: const EdgeInsets.only(right: 8),
+                          child: FilterChip(
+                            label: Text(languageProvider.getText('all')),
+                            selected: _selectedCategory == null,
+                            onSelected: (selected) {
+                              setState(() {
+                                _selectedCategory = null;
+                              });
+                            },
+                          ),
+                        );
+                      }
+                      final category = resourceCategories[index - 1];
+                      return Padding(
+                        padding: const EdgeInsets.only(right: 8),
+                        child: FilterChip(
+                          label: Text(getCategoryDisplayName(category)),
+                          selected: _selectedCategory == category,
+                          onSelected: (selected) {
+                            setState(() {
+                              _selectedCategory = selected ? category : null;
+                            });
+                          },
+                        ),
+                      );
                     },
                   ),
-                );
-              },
-            ),
-          ),
-          Expanded(
-            child: TabBarView(
-              controller: _tabController,
-              children: [
-                // Articles Tab
-                _buildArticlesList(),
-                // Videos Tab
-                _buildVideosList(),
+                ),
+                Expanded(
+                  child: TabBarView(
+                    controller: _tabController,
+                    children: [
+                      // Articles Tab
+                      _buildArticlesList(),
+                      // Videos Tab
+                      _buildVideosList(),
+                    ],
+                  ),
+                ),
               ],
             ),
-          ),
-        ],
-      ),
     );
   }
 
   Widget _buildArticlesList() {
+    final languageProvider = context.read<LanguageProvider>();
     final articles = getFilteredResources(
       category: _selectedCategory,
       type: 'article',
@@ -190,11 +241,9 @@ class _ResourcesTabState extends State<ResourcesTab>
       return Center(
         child: Text(
           _searchQuery.isEmpty
-              ? 'No articles available'
-              : 'No articles found for "$_searchQuery"',
-          style: GoogleFonts.poppins(
-            color: textSecondaryColor,
-          ),
+              ? languageProvider.getText('no_articles_available')
+              : '${languageProvider.getText('no_articles_found')} "$_searchQuery"',
+          style: GoogleFonts.poppins(color: textSecondaryColor),
         ),
       );
     }
@@ -248,9 +297,7 @@ class _ResourcesTabState extends State<ResourcesTab>
                   const SizedBox(height: 8),
                   Text(
                     article.description,
-                    style: GoogleFonts.poppins(
-                      color: textSecondaryColor,
-                    ),
+                    style: GoogleFonts.poppins(color: textSecondaryColor),
                   ),
                   const SizedBox(height: 8),
                   Wrap(
@@ -276,16 +323,13 @@ class _ResourcesTabState extends State<ResourcesTab>
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        'Read Article',
+                        languageProvider.getText('read_article'),
                         style: GoogleFonts.poppins(
                           color: primaryColor,
                           fontWeight: FontWeight.w500,
                         ),
                       ),
-                      Icon(
-                        Icons.arrow_forward,
-                        color: primaryColor,
-                      ),
+                      Icon(Icons.arrow_forward, color: primaryColor),
                     ],
                   ),
                 ],
@@ -298,6 +342,7 @@ class _ResourcesTabState extends State<ResourcesTab>
   }
 
   Widget _buildVideosList() {
+    final languageProvider = context.read<LanguageProvider>();
     final videos = getFilteredResources(
       category: _selectedCategory,
       type: 'video',
@@ -308,11 +353,9 @@ class _ResourcesTabState extends State<ResourcesTab>
       return Center(
         child: Text(
           _searchQuery.isEmpty
-              ? 'No videos available'
-              : 'No videos found for "$_searchQuery"',
-          style: GoogleFonts.poppins(
-            color: textSecondaryColor,
-          ),
+              ? languageProvider.getText('no_videos_available')
+              : '${languageProvider.getText('no_videos_found')} "$_searchQuery"',
+          style: GoogleFonts.poppins(color: textSecondaryColor),
         ),
       );
     }
@@ -343,11 +386,9 @@ class _ResourcesTabState extends State<ResourcesTab>
                         imageUrl: getYouTubeThumbnailUrl(video.videoId!),
                         fit: BoxFit.cover,
                         width: double.infinity,
-                        placeholder: (context, url) => const Center(
-                          child: CircularProgressIndicator(),
-                        ),
-                        errorWidget: (context, url, error) =>
-                            CachedNetworkImage(
+                        placeholder: (context, url) =>
+                            const Center(child: CircularProgressIndicator()),
+                        errorWidget: (context, url, error) => CachedNetworkImage(
                           imageUrl:
                               'https://img.youtube.com/vi/${video.videoId}/hqdefault.jpg',
                           fit: BoxFit.cover,

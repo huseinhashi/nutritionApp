@@ -8,6 +8,8 @@ import { connectDB } from "./database/connection.js";
 import syncDatabase from "./database/sync.js";
 import { createServer } from "http";
 import { Server } from "socket.io";
+import path from "path";
+import fs from "fs";
 
 // Load environment variables
 config();
@@ -60,6 +62,33 @@ app.get("/", (req, res) => {
     message: "Nutrition App API",
     version: "1.0.0",
   });
+});
+
+// Direct image serving route (no authentication, no API versioning)
+app.get("/images/:filename", (req, res) => {
+  const { filename } = req.params;
+  const imagePath = path.join(process.cwd(), "uploads", filename);
+  
+  // Check if file exists
+  if (!fs.existsSync(imagePath)) {
+    return res.status(404).json({
+      success: false,
+      message: "Image not found"
+    });
+  }
+  
+  // Set proper content type
+  const ext = path.extname(filename).toLowerCase();
+  if (ext === '.jpg' || ext === '.jpeg') {
+    res.setHeader('Content-Type', 'image/jpeg');
+  } else if (ext === '.png') {
+    res.setHeader('Content-Type', 'image/png');
+  } else if (ext === '.gif') {
+    res.setHeader('Content-Type', 'image/gif');
+  }
+  
+  // Serve the image
+  res.sendFile(imagePath);
 });
 
 // API Routes

@@ -88,6 +88,11 @@ class WaterIntakeProvider with ChangeNotifier {
     );
   }
 
+  // Get today's total water intake in ml
+  double getTodayTotalMl() {
+    return getTodayTotal() * 1000; // Convert L to ml
+  }
+
   // Clear error
   void clearError() {
     _error = null;

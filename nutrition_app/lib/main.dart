@@ -17,6 +17,7 @@ import 'package:nutrition_app/providers/food_entry_provider.dart';
 import 'package:nutrition_app/services/food_entry_service.dart';
 import 'package:nutrition_app/providers/step_counter_provider.dart';
 import 'package:nutrition_app/services/step_counter_service.dart';
+import 'package:nutrition_app/providers/language_provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -44,6 +45,7 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => AuthProvider()),
+        ChangeNotifierProvider(create: (_) => LanguageProvider()),
         Provider<AuthService>.value(value: authService),
         ChangeNotifierProvider(
           create: (context) => HealthProfileProvider(
@@ -52,9 +54,8 @@ class MyApp extends StatelessWidget {
           ),
         ),
         ChangeNotifierProvider(
-          create: (context) => WaterIntakeProvider(
-            WaterIntakeService(apiClient),
-          ),
+          create: (context) =>
+              WaterIntakeProvider(WaterIntakeService(apiClient)),
         ),
         ChangeNotifierProvider<FoodEntryProvider>(
           create: (context) {
@@ -63,9 +64,7 @@ class MyApp extends StatelessWidget {
           },
         ),
         ChangeNotifierProvider(
-          create: (context) => StepCounterProvider(
-            stepCounterService,
-          ),
+          create: (context) => StepCounterProvider(stepCounterService),
         ),
       ],
       child: Consumer<AuthProvider>(

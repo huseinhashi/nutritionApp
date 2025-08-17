@@ -47,6 +47,9 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   @override
+  // LoginScreen UI enhanced
+
+  @override
   Widget build(BuildContext context) {
     final authProvider = Provider.of<AuthProvider>(context);
 
@@ -56,150 +59,122 @@ class _LoginScreenState extends State<LoginScreen> {
         child: Center(
           child: SingleChildScrollView(
             child: Padding(
-              padding: const EdgeInsets.all(24.0),
+              padding: const EdgeInsets.symmetric(horizontal: 24.0),
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  // Logo & Title
-                  Icon(
-                    Icons.restaurant_menu,
-                    size: 80,
-                    color: primaryColor,
-                  ),
-                  const SizedBox(height: 24),
+                  const SizedBox(height: 16),
+                  Icon(Icons.local_dining, size: 64, color: primaryColor),
+                  const SizedBox(height: 12),
                   Text(
-                    'Nutrition Tracker',
-                    textAlign: TextAlign.center,
+                    'Welcome Back',
                     style: GoogleFonts.poppins(
                       fontSize: 28,
                       fontWeight: FontWeight.bold,
-                      color: primaryColor,
+                      color: textPrimaryColor,
                     ),
                   ),
                   Text(
-                    'Login to track your nutrition',
+                    'Login to continue tracking your goals',
                     textAlign: TextAlign.center,
                     style: GoogleFonts.poppins(
-                      fontSize: 16,
+                      fontSize: 14,
                       color: textSecondaryColor,
                     ),
                   ),
                   const SizedBox(height: 32),
-
-                  // Login Form
                   Form(
                     key: _formKey,
                     child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
-                        TextFormField(
+                        _buildInputField(
                           controller: _phoneController,
+                          icon: Icons.phone,
+                          label: 'Phone Number',
                           keyboardType: TextInputType.phone,
-                          decoration: InputDecoration(
-                            labelText: 'Phone Number',
-                            prefixIcon: Icon(Icons.phone, color: primaryColor),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                          ),
                           validator: (value) {
                             if (value == null || value.isEmpty) {
-                              return 'Please enter your phone number';
+                              return 'Enter your phone number';
                             }
                             if (value.length < 5) {
-                              return 'Please enter a valid phone number';
+                              return 'Enter a valid phone number';
                             }
                             return null;
                           },
                         ),
                         const SizedBox(height: 16),
-                        TextFormField(
+                        _buildInputField(
                           controller: _passwordController,
+                          icon: Icons.lock,
+                          label: 'Password',
                           obscureText: _obscurePassword,
-                          decoration: InputDecoration(
-                            labelText: 'Password',
-                            prefixIcon: Icon(Icons.lock, color: primaryColor),
-                            suffixIcon: IconButton(
-                              icon: Icon(
-                                _obscurePassword
-                                    ? Icons.visibility
-                                    : Icons.visibility_off,
-                                color: textSecondaryColor,
-                              ),
-                              onPressed: () {
-                                setState(() {
-                                  _obscurePassword = !_obscurePassword;
-                                });
-                              },
+                          suffixIcon: IconButton(
+                            icon: Icon(
+                              _obscurePassword
+                                  ? Icons.visibility
+                                  : Icons.visibility_off,
+                              color: textSecondaryColor,
                             ),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(8),
-                            ),
+                            onPressed: () {
+                              setState(() {
+                                _obscurePassword = !_obscurePassword;
+                              });
+                            },
                           ),
                           validator: (value) {
                             if (value == null || value.isEmpty) {
-                              return 'Please enter your password';
+                              return 'Enter your password';
                             }
                             if (value.length < 6) {
-                              return 'Password must be at least 6 characters';
+                              return 'Password must be 6+ characters';
                             }
                             return null;
                           },
                         ),
-
                         if (authProvider.error != null)
                           Padding(
-                            padding: const EdgeInsets.only(top: 8.0),
+                            padding: const EdgeInsets.only(top: 12),
                             child: Text(
                               authProvider.error!,
-                              style: TextStyle(
-                                color: errorColor,
-                                fontSize: 14,
-                              ),
+                              style: TextStyle(color: errorColor, fontSize: 13),
                             ),
                           ),
-
                         const SizedBox(height: 24),
-
-                        // Login Button
                         ElevatedButton(
                           onPressed: authProvider.isLoading ? null : _login,
                           style: ElevatedButton.styleFrom(
                             backgroundColor: primaryColor,
                             foregroundColor: Colors.white,
-                            padding: const EdgeInsets.symmetric(vertical: 12),
-                            textStyle: GoogleFonts.poppins(
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
+                            padding: const EdgeInsets.symmetric(vertical: 14),
+                            minimumSize: const Size(double.infinity, 48),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12),
                             ),
+                            elevation: 3,
                           ),
                           child: authProvider.isLoading
-                              ? const SizedBox(
-                                  height: 20,
-                                  width: 20,
-                                  child: CircularProgressIndicator(
-                                    color: Colors.white,
-                                    strokeWidth: 3,
-                                  ),
+                              ? const CircularProgressIndicator(
+                                  color: Colors.white,
+                                  strokeWidth: 2.5,
                                 )
-                              : const Text('Login'),
+                              : Text(
+                                  'Login',
+                                  style: GoogleFonts.poppins(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
                         ),
-
                         const SizedBox(height: 24),
-
-                        // Register Button
                         TextButton(
-                          onPressed: () {
-                            Navigator.pushNamed(context, '/register');
-                          },
+                          onPressed: () =>
+                              Navigator.pushNamed(context, '/register'),
                           child: RichText(
-                            textAlign: TextAlign.center,
                             text: TextSpan(
-                              text: 'Don\'t have an account? ',
+                              text: "Don't have an account? ",
                               style: GoogleFonts.poppins(
-                                fontSize: 14,
                                 color: textSecondaryColor,
+                                fontSize: 14,
                               ),
                               children: [
                                 TextSpan(
@@ -220,6 +195,46 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
             ),
           ),
+        ),
+      ),
+    );
+  }
+
+// Helper method for modern input styling
+  Widget _buildInputField({
+    required TextEditingController controller,
+    required IconData icon,
+    required String label,
+    TextInputType? keyboardType,
+    bool obscureText = false,
+    Widget? suffixIcon,
+    String? Function(String?)? validator,
+  }) {
+    return TextFormField(
+      controller: controller,
+      keyboardType: keyboardType,
+      obscureText: obscureText,
+      validator: validator,
+      decoration: InputDecoration(
+        labelText: label,
+        labelStyle: GoogleFonts.poppins(fontSize: 14),
+        prefixIcon: Icon(icon, color: primaryColor),
+        suffixIcon: suffixIcon,
+        filled: true,
+        fillColor: surfaceColor,
+        contentPadding:
+            const EdgeInsets.symmetric(horizontal: 16, vertical: 18),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12),
+          borderSide: BorderSide(color: primaryColor.withOpacity(0.5)),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12),
+          borderSide: BorderSide(color: primaryColor.withOpacity(0.3)),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12),
+          borderSide: BorderSide(color: primaryColor, width: 2),
         ),
       ),
     );

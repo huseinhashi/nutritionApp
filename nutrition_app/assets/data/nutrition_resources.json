@@ -1,0 +1,2256 @@
+{
+  "resources": [
+    {
+      "id": "v1",
+      "title": "Is the Fiber Theory Wrong?",
+      "description": "NutritionFacts.org video on fiber evidence.",
+      "imageUrl": null,
+      "videoId": "T0bsqzwkhMo",
+      "articleUrl": null,
+      "category": "healthy_eating",
+      "resourceType": "video",
+      "tags": [
+        "fiber",
+        "healthy_eating",
+        "evidence"
+      ],
+      "dateAdded": "2025-06-01"
+    },
+    {
+      "id": "v2",
+      "title": "Eat as Little Dietary Cholesterol as Possible",
+      "description": "Why minimizing dietary cholesterol is recommended.",
+      "imageUrl": null,
+      "videoId": "Mn-w3HtAiIQ",
+      "articleUrl": null,
+      "category": "nutrition",
+      "resourceType": "video",
+      "tags": [
+        "cholesterol",
+        "lipids"
+      ],
+      "dateAdded": "2025-06-01"
+    },
+    {
+      "id": "v3",
+      "title": "The Benefits of Early Time-Restricted Eating",
+      "description": "Chrononutrition and earlier eating window.",
+      "imageUrl": null,
+      "videoId": "1cAhfZa1Rac",
+      "articleUrl": null,
+      "category": "healthy_eating",
+      "resourceType": "video",
+      "tags": [
+        "chrononutrition",
+        "time_restricted_eating"
+      ],
+      "dateAdded": "2025-06-01"
+    },
+    {
+      "id": "v4",
+      "title": "Optimal Vitamin B12 Dosage and Type",
+      "description": "How much B12 and which form.",
+      "imageUrl": null,
+      "videoId": "MkdZ9GIdQ88",
+      "articleUrl": null,
+      "category": "nutrition",
+      "resourceType": "video",
+      "tags": [
+        "vitamin_b12",
+        "supplements"
+      ],
+      "dateAdded": "2025-06-01"
+    },
+    {
+      "id": "v5",
+      "title": "The Five-to-One Fiber Rule",
+      "description": "A simple label-reading rule for fiber-rich foods.",
+      "imageUrl": null,
+      "videoId": "tBMEYc0PjXY",
+      "articleUrl": null,
+      "category": "healthy_eating",
+      "resourceType": "video",
+      "tags": [
+        "fiber",
+        "labels"
+      ],
+      "dateAdded": "2025-06-01"
+    },
+    {
+      "id": "v6",
+      "title": "Best Diet for Weight Loss & Disease Prevention",
+      "description": "Whole-food plant-based diet overview.",
+      "imageUrl": null,
+      "videoId": "44qLJsfRc1A",
+      "articleUrl": null,
+      "category": "weight_loss",
+      "resourceType": "video",
+      "tags": [
+        "weight_loss",
+        "WFPB"
+      ],
+      "dateAdded": "2025-06-01"
+    },
+    {
+      "id": "v7",
+      "title": "Podcast: Putting the Daily Dozen to the Test",
+      "description": "Dr. Greger on his Daily Dozen checklist.",
+      "imageUrl": null,
+      "videoId": "ZGq9YVlOYuA",
+      "articleUrl": null,
+      "category": "healthy_eating",
+      "resourceType": "video",
+      "tags": [
+        "daily_dozen",
+        "checklist"
+      ],
+      "dateAdded": "2025-06-01"
+    },
+    {
+      "id": "v8",
+      "title": "Can Cholesterol Get Too Low?",
+      "description": "How low LDL affects risk.",
+      "imageUrl": null,
+      "videoId": "4rd8xYISeLo",
+      "articleUrl": null,
+      "category": "nutrition",
+      "resourceType": "video",
+      "tags": [
+        "cholesterol",
+        "cardio"
+      ],
+      "dateAdded": "2025-06-01"
+    },
+    {
+      "id": "v9",
+      "title": "Does Intermittent Fasting Increase Life Expectancy?",
+      "description": "What does the evidence say?",
+      "imageUrl": null,
+      "videoId": "9xg4kB3SsN8",
+      "articleUrl": null,
+      "category": "healthy_eating",
+      "resourceType": "video",
+      "tags": [
+        "fasting",
+        "longevity"
+      ],
+      "dateAdded": "2025-06-01"
+    },
+    {
+      "id": "v10",
+      "title": "Healthiest Food Sources of Vitamin B12",
+      "description": "How to get reliable B12.",
+      "imageUrl": null,
+      "videoId": "oj8qAwgADdM",
+      "articleUrl": null,
+      "category": "nutrition",
+      "resourceType": "video",
+      "tags": [
+        "vitamin_b12",
+        "sources"
+      ],
+      "dateAdded": "2025-06-01"
+    },
+    {
+      "id": "v11",
+      "title": "GLP-1 Satiety Circuit with Fiber",
+      "description": "Fiber and satiety hormones.",
+      "imageUrl": null,
+      "videoId": "2nfJRAl6PC0",
+      "articleUrl": null,
+      "category": "nutrition",
+      "resourceType": "video",
+      "tags": [
+        "GLP-1",
+        "fiber"
+      ],
+      "dateAdded": "2025-06-01"
+    },
+    {
+      "id": "v12",
+      "title": "Is One Egg a Day Too Much?",
+      "description": "Meta-analyses on egg intake.",
+      "imageUrl": null,
+      "videoId": "ck0BmauJjvA",
+      "articleUrl": null,
+      "category": "nutrition",
+      "resourceType": "video",
+      "tags": [
+        "eggs",
+        "cholesterol"
+      ],
+      "dateAdded": "2025-06-01"
+    },
+    {
+      "id": "v13",
+      "title": "The World's Largest Fasting Study",
+      "description": "Findings from a large fasting cohort.",
+      "imageUrl": null,
+      "videoId": "BaDmSEVPZiM",
+      "articleUrl": null,
+      "category": "healthy_eating",
+      "resourceType": "video",
+      "tags": [
+        "fasting"
+      ],
+      "dateAdded": "2025-06-01"
+    },
+    {
+      "id": "v14",
+      "title": "Symptoms of Vitamin B12 Deficiency",
+      "description": "Common signs and risks.",
+      "imageUrl": null,
+      "videoId": "_A-XYkidbiQ",
+      "articleUrl": null,
+      "category": "nutrition",
+      "resourceType": "video",
+      "tags": [
+        "vitamin_b12"
+      ],
+      "dateAdded": "2025-06-01"
+    },
+    {
+      "id": "v15",
+      "title": "Is Fiber an Effective Anti-Inflammatory?",
+      "description": "Roundup of fiber & inflammation.",
+      "imageUrl": null,
+      "videoId": "CUCZ6zjHOOc",
+      "articleUrl": null,
+      "category": "nutrition",
+      "resourceType": "video",
+      "tags": [
+        "fiber",
+        "inflammation"
+      ],
+      "dateAdded": "2025-06-01"
+    },
+    {
+      "id": "v16",
+      "title": "Evidence‑Based Nutrition (lecture)",
+      "description": "Long-form talk from NutritionFacts.org.",
+      "imageUrl": null,
+      "videoId": "8W_LMpPoJxs",
+      "articleUrl": null,
+      "category": "nutrition",
+      "resourceType": "video",
+      "tags": [
+        "lecture",
+        "evidence"
+      ],
+      "dateAdded": "2025-06-01"
+    },
+    {
+      "id": "v17",
+      "title": "How Low Should You Go for LDL?",
+      "description": "Targets for LDL cholesterol.",
+      "imageUrl": null,
+      "videoId": "QVcUAYAZNGs",
+      "articleUrl": null,
+      "category": "nutrition",
+      "resourceType": "video",
+      "tags": [
+        "LDL",
+        "cholesterol"
+      ],
+      "dateAdded": "2025-06-01"
+    },
+    {
+      "id": "v18",
+      "title": "Fasting for Healing (Friday Favorites)",
+      "description": "Physiologic rest and healing.",
+      "imageUrl": null,
+      "videoId": "nMSUcC1d03M",
+      "articleUrl": null,
+      "category": "healthy_eating",
+      "resourceType": "video",
+      "tags": [
+        "fasting"
+      ],
+      "dateAdded": "2025-06-01"
+    },
+    {
+      "id": "v19",
+      "title": "Optimal B12 for Kids, Pregnancy & Seniors",
+      "description": "Dosing recommendations.",
+      "imageUrl": null,
+      "videoId": "cztrMoRjb_E",
+      "articleUrl": null,
+      "category": "nutrition",
+      "resourceType": "video",
+      "tags": [
+        "vitamin_b12"
+      ],
+      "dateAdded": "2025-06-01"
+    },
+    {
+      "id": "v20",
+      "title": "Prebiotic Foods & the Microbiome",
+      "description": "How to keep your microbiome healthy.",
+      "imageUrl": null,
+      "videoId": "E4DSymC4zkc",
+      "articleUrl": null,
+      "category": "nutrition",
+      "resourceType": "video",
+      "tags": [
+        "microbiome",
+        "prebiotics"
+      ],
+      "dateAdded": "2025-06-01"
+    },
+    {
+      "id": "v21",
+      "title": "What is Healthy Eating?",
+      "description": "Mayo Clinic explains balanced eating.",
+      "imageUrl": null,
+      "videoId": "kmDKDTbg_78",
+      "articleUrl": null,
+      "category": "healthy_eating",
+      "resourceType": "video",
+      "tags": [
+        "basics"
+      ],
+      "dateAdded": "2025-06-01"
+    },
+    {
+      "id": "v22",
+      "title": "Nutrition for Heart Health",
+      "description": "Diet tips from Mayo cardiology.",
+      "imageUrl": null,
+      "videoId": "cziHOoJPAb4",
+      "articleUrl": null,
+      "category": "nutrition",
+      "resourceType": "video",
+      "tags": [
+        "heart",
+        "diet"
+      ],
+      "dateAdded": "2025-06-01"
+    },
+    {
+      "id": "v23",
+      "title": "Protein: How Much Do You Need?",
+      "description": "Mayo Clinic Q&A on protein.",
+      "imageUrl": null,
+      "videoId": "E3BgQs49Wag",
+      "articleUrl": null,
+      "category": "nutrition",
+      "resourceType": "video",
+      "tags": [
+        "protein"
+      ],
+      "dateAdded": "2025-06-01"
+    },
+    {
+      "id": "v24",
+      "title": "Carbs: Quality and Quantity",
+      "description": "Choosing better carbohydrates.",
+      "imageUrl": null,
+      "videoId": "hoPg4bkKemQ",
+      "articleUrl": null,
+      "category": "nutrition",
+      "resourceType": "video",
+      "tags": [
+        "carbs",
+        "glycemic_index"
+      ],
+      "dateAdded": "2025-06-01"
+    },
+    {
+      "id": "v25",
+      "title": "Vitamins & Supplements: What Works?",
+      "description": "Evidence-based view on supplements.",
+      "imageUrl": null,
+      "videoId": "IJWsKzsW9z0",
+      "articleUrl": null,
+      "category": "nutrition",
+      "resourceType": "video",
+      "tags": [
+        "supplements"
+      ],
+      "dateAdded": "2025-06-01"
+    },
+    {
+      "id": "v26",
+      "title": "Healthy Eating on a Budget",
+      "description": "Practical tips for affordable nutrition.",
+      "imageUrl": null,
+      "videoId": "WViSvPFUVd8",
+      "articleUrl": null,
+      "category": "healthy_eating",
+      "resourceType": "video",
+      "tags": [
+        "budget"
+      ],
+      "dateAdded": "2025-06-01"
+    },
+    {
+      "id": "v27",
+      "title": "Mediterranean Diet Basics",
+      "description": "How to start the Mediterranean pattern.",
+      "imageUrl": null,
+      "videoId": "0zCVwG4Vr4w",
+      "articleUrl": null,
+      "category": "healthy_eating",
+      "resourceType": "video",
+      "tags": [
+        "mediterranean_diet"
+      ],
+      "dateAdded": "2025-06-01"
+    },
+    {
+      "id": "v28",
+      "title": "Healthy Oceans, Healthy Lives",
+      "description": "Harvard talk linking oceans and nutrition.",
+      "imageUrl": null,
+      "videoId": "BifWYqeOeZg",
+      "articleUrl": null,
+      "category": "nutrition",
+      "resourceType": "video",
+      "tags": [
+        "food_systems",
+        "environment"
+      ],
+      "dateAdded": "2025-06-01"
+    },
+    {
+      "id": "v29",
+      "title": "Nutrition Science: Demystifying Diets",
+      "description": "Stanford Medicine overview of popular diets.",
+      "imageUrl": null,
+      "videoId": "EqUWU_6utPY",
+      "articleUrl": null,
+      "category": "nutrition",
+      "resourceType": "video",
+      "tags": [
+        "diets"
+      ],
+      "dateAdded": "2025-06-01"
+    },
+    {
+      "id": "v30",
+      "title": "Personalized Nutrition with C. Gardner",
+      "description": "Stanford Health Matters session.",
+      "imageUrl": null,
+      "videoId": "R1K4kGpmjLc",
+      "articleUrl": null,
+      "category": "nutrition",
+      "resourceType": "video",
+      "tags": [
+        "personalized_nutrition"
+      ],
+      "dateAdded": "2025-06-01"
+    },
+    {
+      "id": "v31",
+      "title": "Nutrition & Kidney Disease",
+      "description": "Johns Hopkins: diet for kidney health.",
+      "imageUrl": null,
+      "videoId": "SD79QL1n3jM",
+      "articleUrl": null,
+      "category": "nutrition",
+      "resourceType": "video",
+      "tags": [
+        "kidney"
+      ],
+      "dateAdded": "2025-06-01"
+    },
+    {
+      "id": "v32",
+      "title": "Chrononutrition: Timing Your Meals",
+      "description": "Johns Hopkins: what is chrononutrition.",
+      "imageUrl": null,
+      "videoId": "sir4Q_XlC8E",
+      "articleUrl": null,
+      "category": "nutrition",
+      "resourceType": "video",
+      "tags": [
+        "chrononutrition"
+      ],
+      "dateAdded": "2025-06-01"
+    },
+    {
+      "id": "v33",
+      "title": "Food as Medicine (Johns Hopkins)",
+      "description": "How nutrition supports health.",
+      "imageUrl": null,
+      "videoId": "GsqK0x0zTag",
+      "articleUrl": null,
+      "category": "healthy_eating",
+      "resourceType": "video",
+      "tags": [
+        "food_as_medicine"
+      ],
+      "dateAdded": "2025-06-01"
+    },
+    {
+      "id": "v34",
+      "title": "Eatwell Guide (NHS)",
+      "description": "UK balanced diet visual guide.",
+      "imageUrl": null,
+      "videoId": "770pFeNXmqM",
+      "articleUrl": null,
+      "category": "healthy_eating",
+      "resourceType": "video",
+      "tags": [
+        "eatwell",
+        "NHS"
+      ],
+      "dateAdded": "2025-06-01"
+    },
+    {
+      "id": "v35",
+      "title": "Eatwell Guide: Balanced Diet",
+      "description": "Public Health England video.",
+      "imageUrl": null,
+      "videoId": "m4f7mZug_s4",
+      "articleUrl": null,
+      "category": "healthy_eating",
+      "resourceType": "video",
+      "tags": [
+        "eatwell"
+      ],
+      "dateAdded": "2025-06-01"
+    },
+    {
+      "id": "v36",
+      "title": "What is the Eatwell Guide?",
+      "description": "Kent Community Health NHS overview.",
+      "imageUrl": null,
+      "videoId": "7MlE4G8ntss",
+      "articleUrl": null,
+      "category": "healthy_eating",
+      "resourceType": "video",
+      "tags": [
+        "eatwell"
+      ],
+      "dateAdded": "2025-06-01"
+    },
+    {
+      "id": "v37",
+      "title": "Your Guide to the Eatwell Guide",
+      "description": "Explainer from NHS Trust.",
+      "imageUrl": null,
+      "videoId": "8aWqZd9RScQ",
+      "articleUrl": null,
+      "category": "healthy_eating",
+      "resourceType": "video",
+      "tags": [
+        "eatwell"
+      ],
+      "dateAdded": "2025-06-01"
+    },
+    {
+      "id": "v38",
+      "title": "BSL Eatwell: Fruit & Veg",
+      "description": "NHS Scotland in BSL: fruits & veg.",
+      "imageUrl": null,
+      "videoId": "0l0xWlM8Ui8",
+      "articleUrl": null,
+      "category": "healthy_eating",
+      "resourceType": "video",
+      "tags": [
+        "eatwell"
+      ],
+      "dateAdded": "2025-06-01"
+    },
+    {
+      "id": "v39",
+      "title": "BSL Eatwell: Water & Drinks",
+      "description": "NHS Scotland on hydration.",
+      "imageUrl": null,
+      "videoId": "oFFsMTNjijg",
+      "articleUrl": null,
+      "category": "healthy_eating",
+      "resourceType": "video",
+      "tags": [
+        "hydration"
+      ],
+      "dateAdded": "2025-06-01"
+    },
+    {
+      "id": "v40",
+      "title": "BSL Eatwell: High Fat/Salt/Sugar",
+      "description": "NHS Scotland guidance.",
+      "imageUrl": null,
+      "videoId": "VP7TEvjGDJI",
+      "articleUrl": null,
+      "category": "healthy_eating",
+      "resourceType": "video",
+      "tags": [
+        "HFSS"
+      ],
+      "dateAdded": "2025-06-01"
+    },
+    {
+      "id": "v41",
+      "title": "BSL Eatwell: How to Eat Balanced",
+      "description": "NHS Scotland overview.",
+      "imageUrl": null,
+      "videoId": "vvVtLmgqlTU",
+      "articleUrl": null,
+      "category": "healthy_eating",
+      "resourceType": "video",
+      "tags": [
+        "eatwell"
+      ],
+      "dateAdded": "2025-06-01"
+    },
+    {
+      "id": "v42",
+      "title": "CDC: Dietary Guidelines 2020–2025",
+      "description": "Overview of US guidance.",
+      "imageUrl": null,
+      "videoId": "4tLOnqnHbiU",
+      "articleUrl": null,
+      "category": "healthy_eating",
+      "resourceType": "video",
+      "tags": [
+        "guidelines"
+      ],
+      "dateAdded": "2025-06-01"
+    },
+    {
+      "id": "v43",
+      "title": "CDC: Healthy choices became a habit",
+      "description": "Lifestyle change story.",
+      "imageUrl": null,
+      "videoId": "z4v6pXQTiWI",
+      "articleUrl": null,
+      "category": "healthy_eating",
+      "resourceType": "video",
+      "tags": [
+        "habits"
+      ],
+      "dateAdded": "2025-06-01"
+    },
+    {
+      "id": "v44",
+      "title": "WHO: A Healthy Diet, A Healthier World",
+      "description": "WHO explainer on sustainable healthy diets.",
+      "imageUrl": null,
+      "videoId": "XMcab1MFaLc",
+      "articleUrl": null,
+      "category": "healthy_eating",
+      "resourceType": "video",
+      "tags": [
+        "WHO",
+        "sustainable_diets"
+      ],
+      "dateAdded": "2025-06-01"
+    },
+    {
+      "id": "v45",
+      "title": "WHO-FAO: Better nutrition, better lives (ICN2)",
+      "description": "Global malnutrition & solutions.",
+      "imageUrl": null,
+      "videoId": "FQ6mxdfnA2Y",
+      "articleUrl": null,
+      "category": "nutrition",
+      "resourceType": "video",
+      "tags": [
+        "WHO",
+        "FAO"
+      ],
+      "dateAdded": "2025-06-01"
+    },
+    {
+      "id": "v46",
+      "title": "WHO: eLENA – Choosing Good Nutrition",
+      "description": "Evidence-informed nutrition library.",
+      "imageUrl": null,
+      "videoId": "3jBsLsJvu80",
+      "articleUrl": null,
+      "category": "nutrition",
+      "resourceType": "video",
+      "tags": [
+        "WHO",
+        "guidelines"
+      ],
+      "dateAdded": "2025-06-01"
+    },
+    {
+      "id": "v47",
+      "title": "WHO: Nutrition, health & sports (panel)",
+      "description": "Healthy food environments at mega events.",
+      "imageUrl": null,
+      "videoId": "B6ehOWFtUto",
+      "articleUrl": null,
+      "category": "nutrition",
+      "resourceType": "video",
+      "tags": [
+        "policy"
+      ],
+      "dateAdded": "2025-06-01"
+    },
+    {
+      "id": "v48",
+      "title": "UNICEF: Inside a nutrition clinic in Somalia",
+      "description": "Outpatient therapeutic care in Somalia.",
+      "imageUrl": null,
+      "videoId": "mtqQs59RmEw",
+      "articleUrl": null,
+      "category": "nutrition",
+      "resourceType": "video",
+      "tags": [
+        "Somalia",
+        "UNICEF"
+      ],
+      "dateAdded": "2025-06-01"
+    },
+    {
+      "id": "v49",
+      "title": "UNICEF Somalia: Luul's recovery",
+      "description": "Severe acute malnutrition recovery.",
+      "imageUrl": null,
+      "videoId": "G9wEHzFXAHQ",
+      "articleUrl": null,
+      "category": "nutrition",
+      "resourceType": "video",
+      "tags": [
+        "Somalia",
+        "SAM"
+      ],
+      "dateAdded": "2025-06-01"
+    },
+    {
+      "id": "v50",
+      "title": "UNICEF Somalia: WASH & Nutrition response",
+      "description": "Integrated WASH-nutrition to prevent malnutrition.",
+      "imageUrl": null,
+      "videoId": "P1Uw4DyGiiE",
+      "articleUrl": null,
+      "category": "nutrition",
+      "resourceType": "video",
+      "tags": [
+        "Somalia",
+        "WASH"
+      ],
+      "dateAdded": "2025-06-01"
+    },
+    {
+      "id": "v51",
+      "title": "UNICEF: Tackling malnutrition in Somalia",
+      "description": "Community-based approaches in Burao.",
+      "imageUrl": null,
+      "videoId": "VDurk_kX0dg",
+      "articleUrl": null,
+      "category": "nutrition",
+      "resourceType": "video",
+      "tags": [
+        "Somalia"
+      ],
+      "dateAdded": "2025-06-01"
+    },
+    {
+      "id": "v52",
+      "title": "UNICEF: Nutrition programme beacon of hope",
+      "description": "Mobile health & nutrition teams.",
+      "imageUrl": null,
+      "videoId": "ES-mK7PcfzA",
+      "articleUrl": null,
+      "category": "nutrition",
+      "resourceType": "video",
+      "tags": [
+        "Somalia"
+      ],
+      "dateAdded": "2025-06-01"
+    },
+    {
+      "id": "v53",
+      "title": "UNICEF Somalia & UKaid: Integrated programme",
+      "description": "Saving lives through integrated approaches.",
+      "imageUrl": null,
+      "videoId": "a84S-EYdE6k",
+      "articleUrl": null,
+      "category": "nutrition",
+      "resourceType": "video",
+      "tags": [
+        "Somalia",
+        "integration"
+      ],
+      "dateAdded": "2025-06-01"
+    },
+    {
+      "id": "v54",
+      "title": "MyPlate: What's Your Healthy Eating Style?",
+      "description": "USDA MyPlate overview.",
+      "imageUrl": null,
+      "videoId": "j7CcaUZrUoE",
+      "articleUrl": null,
+      "category": "healthy_eating",
+      "resourceType": "video",
+      "tags": [
+        "MyPlate"
+      ],
+      "dateAdded": "2025-06-01"
+    },
+    {
+      "id": "v55",
+      "title": "ADA: Plan Your Plate",
+      "description": "Diabetes plate method.",
+      "imageUrl": null,
+      "videoId": "Zd9W5JMhgLc",
+      "articleUrl": null,
+      "category": "meal_planning",
+      "resourceType": "video",
+      "tags": [
+        "ADA",
+        "plate_method"
+      ],
+      "dateAdded": "2025-06-01"
+    },
+    {
+      "id": "v56",
+      "title": "ADA: Diabetes Basics – Create Your Plate",
+      "description": "Create balanced meals for diabetes.",
+      "imageUrl": null,
+      "videoId": "A6LZijdsGu0",
+      "articleUrl": null,
+      "category": "meal_planning",
+      "resourceType": "video",
+      "tags": [
+        "ADA",
+        "diabetes"
+      ],
+      "dateAdded": "2025-06-01"
+    },
+    {
+      "id": "v57",
+      "title": "Rethinking Your Plate (ADA)",
+      "description": "Portioning & meal planning tips.",
+      "imageUrl": null,
+      "videoId": "vmjkdFOZj9E",
+      "articleUrl": null,
+      "category": "meal_planning",
+      "resourceType": "video",
+      "tags": [
+        "ADA"
+      ],
+      "dateAdded": "2025-06-01"
+    },
+    {
+      "id": "v58",
+      "title": "American Heart Association: Life's Essential 8",
+      "description": "Core metrics incl. diet quality.",
+      "imageUrl": null,
+      "videoId": "SMsTLXiyQWc",
+      "articleUrl": null,
+      "category": "healthy_eating",
+      "resourceType": "video",
+      "tags": [
+        "AHA",
+        "diet_quality"
+      ],
+      "dateAdded": "2025-06-01"
+    },
+    {
+      "id": "v59",
+      "title": "AHA: Mediterranean Diet Fit Facts",
+      "description": "Mediterranean diet starter tips.",
+      "imageUrl": null,
+      "videoId": "jYZ_yf2LBu4",
+      "articleUrl": null,
+      "category": "healthy_eating",
+      "resourceType": "video",
+      "tags": [
+        "AHA",
+        "Mediterranean"
+      ],
+      "dateAdded": "2025-06-01"
+    },
+    {
+      "id": "v60",
+      "title": "DASH Diet Explained",
+      "description": "Why DASH supports heart health.",
+      "imageUrl": null,
+      "videoId": "MOQryjhlsA8",
+      "articleUrl": null,
+      "category": "healthy_eating",
+      "resourceType": "video",
+      "tags": [
+        "DASH",
+        "blood_pressure"
+      ],
+      "dateAdded": "2025-06-01"
+    },
+    {
+      "id": "v61",
+      "title": "Confused about diets? Try DASH",
+      "description": "Another DASH explainer.",
+      "imageUrl": null,
+      "videoId": "Ue3_bOdWAfQ",
+      "articleUrl": null,
+      "category": "healthy_eating",
+      "resourceType": "video",
+      "tags": [
+        "DASH"
+      ],
+      "dateAdded": "2025-06-01"
+    },
+    {
+      "id": "v62",
+      "title": "TED‑Ed: How sugar affects the brain",
+      "description": "Short lesson on sugar and brain.",
+      "imageUrl": null,
+      "videoId": "lEXBxijQREo",
+      "articleUrl": null,
+      "category": "nutrition",
+      "resourceType": "video",
+      "tags": [
+        "sugar",
+        "brain"
+      ],
+      "dateAdded": "2025-06-01"
+    },
+    {
+      "id": "v63",
+      "title": "TED‑Ed: How the food you eat affects your brain",
+      "description": "Nutrition & brain health basics.",
+      "imageUrl": null,
+      "videoId": "xyQY8a-ng6g",
+      "articleUrl": null,
+      "category": "nutrition",
+      "resourceType": "video",
+      "tags": [
+        "brain",
+        "diet"
+      ],
+      "dateAdded": "2025-06-01"
+    },
+    {
+      "id": "v64",
+      "title": "TEDx: This Is Your Brain on Sugar",
+      "description": "TEDxYouth@Sydney talk.",
+      "imageUrl": null,
+      "videoId": "Dacv_OoM62s",
+      "articleUrl": null,
+      "category": "nutrition",
+      "resourceType": "video",
+      "tags": [
+        "sugar"
+      ],
+      "dateAdded": "2025-06-01"
+    },
+    {
+      "id": "v65",
+      "title": "TED‑Ed: Sugar hiding in plain sight",
+      "description": "Label reading—sugar aliases.",
+      "imageUrl": null,
+      "videoId": "Q4CZ81EmAsw",
+      "articleUrl": null,
+      "category": "nutrition",
+      "resourceType": "video",
+      "tags": [
+        "sugar",
+        "labels"
+      ],
+      "dateAdded": "2025-06-01"
+    },
+    {
+      "id": "v66",
+      "title": "Sugar is Not a Treat (TEDx)",
+      "description": "Rethinking sugar intake.",
+      "imageUrl": null,
+      "videoId": "tic7X3ET4gE",
+      "articleUrl": null,
+      "category": "nutrition",
+      "resourceType": "video",
+      "tags": [
+        "sugar"
+      ],
+      "dateAdded": "2025-06-01"
+    },
+    {
+      "id": "v67",
+      "title": "Sugar can change your mind (TEDx)",
+      "description": "Sugar & cognition.",
+      "imageUrl": null,
+      "videoId": "UJpUjnoNTHI",
+      "articleUrl": null,
+      "category": "nutrition",
+      "resourceType": "video",
+      "tags": [
+        "sugar",
+        "brain"
+      ],
+      "dateAdded": "2025-06-01"
+    },
+    {
+      "id": "v68",
+      "title": "Cunto Caafimaad Leh | Somali Nutritionist (Grocery haul)",
+      "description": "Af‑Soomaali vlog about healthy eating choices.",
+      "imageUrl": null,
+      "videoId": "ZOGeUUf0J3U",
+      "articleUrl": null,
+      "category": "healthy_eating",
+      "resourceType": "video",
+      "tags": [
+        "Somali",
+        "cunto_caafimaad"
+      ],
+      "dateAdded": "2025-06-01"
+    },
+    {
+      "id": "v69",
+      "title": "Fitamiin B1: Cuntooyinka laga helo",
+      "description": "Af‑Soomaali video about Vitamin B1.",
+      "imageUrl": null,
+      "videoId": "jIhaAjw42S4",
+      "articleUrl": null,
+      "category": "nutrition",
+      "resourceType": "video",
+      "tags": [
+        "Somali",
+        "vitamin_B1"
+      ],
+      "dateAdded": "2025-06-01"
+    },
+    {
+      "id": "v70",
+      "title": "Cunto Caafimaad Leh (Trimester 3)",
+      "description": "Af‑Soomaali pregnancy nutrition.",
+      "imageUrl": null,
+      "videoId": "hmyqmvkoZz8",
+      "articleUrl": null,
+      "category": "nutrition",
+      "resourceType": "video",
+      "tags": [
+        "Somali",
+        "pregnancy"
+      ],
+      "dateAdded": "2025-06-01"
+    },
+    {
+      "id": "v71",
+      "title": "Caafimaad Cunitaanka – Healthy Eating (Somali)",
+      "description": "Somali-language healthy eating basics.",
+      "imageUrl": null,
+      "videoId": "pfAcoPLFnPs",
+      "articleUrl": null,
+      "category": "healthy_eating",
+      "resourceType": "video",
+      "tags": [
+        "Somali"
+      ],
+      "dateAdded": "2025-06-01"
+    },
+    {
+      "id": "v72",
+      "title": "Faa'iidada Vitamin B12",
+      "description": "Af‑Soomaali: B12 signs & sources.",
+      "imageUrl": null,
+      "videoId": "YZH07jLrgbo",
+      "articleUrl": null,
+      "category": "nutrition",
+      "resourceType": "video",
+      "tags": [
+        "Somali",
+        "vitamin_B12"
+      ],
+      "dateAdded": "2025-06-01"
+    },
+    {
+      "id": "v73",
+      "title": "Cunto Caafimaad Leh & Sharaxaad",
+      "description": "Somali healthy food & shopping.",
+      "imageUrl": null,
+      "videoId": "K0s0wvbGzxU",
+      "articleUrl": null,
+      "category": "healthy_eating",
+      "resourceType": "video",
+      "tags": [
+        "Somali"
+      ],
+      "dateAdded": "2025-06-01"
+    },
+    {
+      "id": "v74",
+      "title": "Waxtarka Chia Seeds (Soomaali)",
+      "description": "How to use chia seeds.",
+      "imageUrl": null,
+      "videoId": "Kw15eYsndpo",
+      "articleUrl": null,
+      "category": "nutrition",
+      "resourceType": "video",
+      "tags": [
+        "Somali",
+        "chia"
+      ],
+      "dateAdded": "2025-06-01"
+    },
+    {
+      "id": "v75",
+      "title": "Cuntada Isku Caateeyo (Keto)",
+      "description": "Somali weight‑loss diet discussion.",
+      "imageUrl": null,
+      "videoId": "Vi54QL7Xt40",
+      "articleUrl": null,
+      "category": "weight_loss",
+      "resourceType": "video",
+      "tags": [
+        "Somali",
+        "keto"
+      ],
+      "dateAdded": "2025-06-01"
+    },
+    {
+      "id": "v76",
+      "title": "DAILY VLOG | Cunto Caafimaad Leh",
+      "description": "Somali healthy smoothie & tips.",
+      "imageUrl": null,
+      "videoId": "R4gGjTMP-2U",
+      "articleUrl": null,
+      "category": "healthy_eating",
+      "resourceType": "video",
+      "tags": [
+        "Somali"
+      ],
+      "dateAdded": "2025-06-01"
+    },
+    {
+      "id": "v77",
+      "title": "Hagaha Caafimaadka: Cunto Isku Dheeli Tirran",
+      "description": "Somali-language healthy eating talk.",
+      "imageUrl": null,
+      "videoId": "jhCW0-PaFQU",
+      "articleUrl": null,
+      "category": "healthy_eating",
+      "resourceType": "video",
+      "tags": [
+        "Somalia",
+        "TV"
+      ],
+      "dateAdded": "2025-06-01"
+    },
+    {
+      "id": "v78",
+      "title": "Cunto caafimaad leh (caruurta)",
+      "description": "Somali kids’ healthy recipe video.",
+      "imageUrl": null,
+      "videoId": "Nf6GPdXM-dM",
+      "articleUrl": null,
+      "category": "healthy_eating",
+      "resourceType": "video",
+      "tags": [
+        "Somali",
+        "kids"
+      ],
+      "dateAdded": "2025-06-01"
+    },
+    {
+      "id": "v79",
+      "title": "Waa maxay sonkorow? (Af‑Soomaali)",
+      "description": "What is diabetes & diet basics.",
+      "imageUrl": null,
+      "videoId": "wojHb1vnt0w",
+      "articleUrl": null,
+      "category": "nutrition",
+      "resourceType": "video",
+      "tags": [
+        "Somali",
+        "diabetes"
+      ],
+      "dateAdded": "2025-06-01"
+    },
+    {
+      "id": "v80",
+      "title": "Is a Calorie a Calorie? (Stanford)",
+      "description": "Christopher Gardner on calories & food quality.",
+      "imageUrl": null,
+      "videoId": "nxyxcTZccsE",
+      "articleUrl": null,
+      "category": "nutrition",
+      "resourceType": "video",
+      "tags": [
+        "calories",
+        "quality"
+      ],
+      "dateAdded": "2025-06-01"
+    },
+    {
+      "id": "v81",
+      "title": "Johns Hopkins: Vitamins, Minerals & Supplements",
+      "description": "When supplements help vs harm.",
+      "imageUrl": null,
+      "videoId": "rTfuGQrSu9M",
+      "articleUrl": null,
+      "category": "nutrition",
+      "resourceType": "video",
+      "tags": [
+        "supplements"
+      ],
+      "dateAdded": "2025-06-01"
+    },
+    {
+      "id": "v82",
+      "title": "Harvard Chan Cooks: Farro & Veg",
+      "description": "Cooking whole grains & veg.",
+      "imageUrl": null,
+      "videoId": "m5bIPn8H1nY",
+      "articleUrl": null,
+      "category": "healthy_eating",
+      "resourceType": "video",
+      "tags": [
+        "cooking",
+        "whole_grains"
+      ],
+      "dateAdded": "2025-06-01"
+    },
+    {
+      "id": "v83",
+      "title": "Beginner's Guide to Healthy Eating",
+      "description": "Nutrition 101 basics.",
+      "imageUrl": null,
+      "videoId": "5znuV7Iyrzs",
+      "articleUrl": null,
+      "category": "healthy_eating",
+      "resourceType": "video",
+      "tags": [
+        "basics"
+      ],
+      "dateAdded": "2025-06-01"
+    },
+    {
+      "id": "v84",
+      "title": "Doctor's List of Healthy Processed Foods",
+      "description": "PCRM: better packaged options.",
+      "imageUrl": null,
+      "videoId": "MqAA_J62l1A",
+      "articleUrl": null,
+      "category": "healthy_eating",
+      "resourceType": "video",
+      "tags": [
+        "PCRM",
+        "processed"
+      ],
+      "dateAdded": "2025-06-01"
+    },
+    {
+      "id": "v85",
+      "title": "Autoimmune: Foods That Help",
+      "description": "PCRM with Dr. Barnard.",
+      "imageUrl": null,
+      "videoId": "qcV94P6UHqo",
+      "articleUrl": null,
+      "category": "nutrition",
+      "resourceType": "video",
+      "tags": [
+        "autoimmune"
+      ],
+      "dateAdded": "2025-06-01"
+    },
+    {
+      "id": "v86",
+      "title": "How Many Calories Should You Eat?",
+      "description": "PCRM: calorie needs & weight.",
+      "imageUrl": null,
+      "videoId": "V18FbVdGizw",
+      "articleUrl": null,
+      "category": "weight_loss",
+      "resourceType": "video",
+      "tags": [
+        "calories"
+      ],
+      "dateAdded": "2025-06-01"
+    },
+    {
+      "id": "v87",
+      "title": "Supplements & Health: Sorting Facts",
+      "description": "Mayo/academic talk on supplements.",
+      "imageUrl": null,
+      "videoId": "EDunVvFPQBU",
+      "articleUrl": null,
+      "category": "nutrition",
+      "resourceType": "video",
+      "tags": [
+        "supplements"
+      ],
+      "dateAdded": "2025-06-01"
+    },
+    {
+      "id": "v88",
+      "title": "Nutrition Basics [Dietitian]",
+      "description": "Macronutrients & micronutrients overview.",
+      "imageUrl": null,
+      "videoId": "oo3I4CoemOQ",
+      "articleUrl": null,
+      "category": "nutrition",
+      "resourceType": "video",
+      "tags": [
+        "basics"
+      ],
+      "dateAdded": "2025-06-01"
+    },
+    {
+      "id": "v89",
+      "title": "Nutrition 101: Info for Patients",
+      "description": "Clinic-friendly nutrition basics.",
+      "imageUrl": null,
+      "videoId": "PeR3FXsf294",
+      "articleUrl": null,
+      "category": "healthy_eating",
+      "resourceType": "video",
+      "tags": [
+        "basics"
+      ],
+      "dateAdded": "2025-06-01"
+    },
+    {
+      "id": "v90",
+      "title": "Nutrition & Brain Health (Seminar)",
+      "description": "Diet & brain health presentations.",
+      "imageUrl": null,
+      "videoId": "R4UrzWKoT8I",
+      "articleUrl": null,
+      "category": "nutrition",
+      "resourceType": "video",
+      "tags": [
+        "brain"
+      ],
+      "dateAdded": "2025-06-01"
+    },
+    {
+      "id": "v91",
+      "title": "Healthy Eating 101 (UNL)",
+      "description": "Balanced calorie intake & whole foods.",
+      "imageUrl": null,
+      "videoId": "yAtPzf68zEw",
+      "articleUrl": null,
+      "category": "healthy_eating",
+      "resourceType": "video",
+      "tags": [
+        "education"
+      ],
+      "dateAdded": "2025-06-01"
+    },
+    {
+      "id": "v92",
+      "title": "Eatwell Guide: Healthy choices",
+      "description": "NHS choices overview.",
+      "imageUrl": null,
+      "videoId": "xvy-RDQz-Dw",
+      "articleUrl": null,
+      "category": "healthy_eating",
+      "resourceType": "video",
+      "tags": [
+        "eatwell"
+      ],
+      "dateAdded": "2025-06-01"
+    },
+    {
+      "id": "v93",
+      "title": "Micronutrients and Diet (Stanford)",
+      "description": "Mini-lecture on micronutrients.",
+      "imageUrl": null,
+      "videoId": "8qD3GxV4Ykg",
+      "articleUrl": null,
+      "category": "nutrition",
+      "resourceType": "video",
+      "tags": [
+        "micronutrients"
+      ],
+      "dateAdded": "2025-06-01"
+    },
+    {
+      "id": "v94",
+      "title": "Sports Nutrition for Performing Arts",
+      "description": "Dan Benardot grand rounds.",
+      "imageUrl": null,
+      "videoId": "cehLCOypw14",
+      "articleUrl": null,
+      "category": "nutrition",
+      "resourceType": "video",
+      "tags": [
+        "sports_nutrition"
+      ],
+      "dateAdded": "2025-06-01"
+    },
+    {
+      "id": "v95",
+      "title": "Healthier You: Diet & Microbiome",
+      "description": "Christopher Gardner talk.",
+      "imageUrl": null,
+      "videoId": "3kwGGa40eWU",
+      "articleUrl": null,
+      "category": "nutrition",
+      "resourceType": "video",
+      "tags": [
+        "microbiome"
+      ],
+      "dateAdded": "2025-06-01"
+    },
+    {
+      "id": "v96",
+      "title": "Nutrition & Cancer: Myths & Facts",
+      "description": "Stanford dietitian talk.",
+      "imageUrl": null,
+      "videoId": "LlJQdRFfucQ",
+      "articleUrl": null,
+      "category": "nutrition",
+      "resourceType": "video",
+      "tags": [
+        "cancer",
+        "myths"
+      ],
+      "dateAdded": "2025-06-01"
+    },
+    {
+      "id": "v97",
+      "title": "Pain and Nutrition",
+      "description": "Diet & inflammation in pain.",
+      "imageUrl": null,
+      "videoId": "15v-8oRtIis",
+      "articleUrl": null,
+      "category": "nutrition",
+      "resourceType": "video",
+      "tags": [
+        "inflammation"
+      ],
+      "dateAdded": "2025-06-01"
+    },
+    {
+      "id": "v98",
+      "title": "Eating in the Anthropocene",
+      "description": "JHU: diets, food systems & climate.",
+      "imageUrl": null,
+      "videoId": "-QjYK6QGalw",
+      "articleUrl": null,
+      "category": "nutrition",
+      "resourceType": "video",
+      "tags": [
+        "sustainability"
+      ],
+      "dateAdded": "2025-06-01"
+    },
+    {
+      "id": "v99",
+      "title": "Healthy Eating for Kids",
+      "description": "Basics for children: balanced meals.",
+      "imageUrl": null,
+      "videoId": "a-084pqI05U",
+      "articleUrl": null,
+      "category": "healthy_eating",
+      "resourceType": "video",
+      "tags": [
+        "kids"
+      ],
+      "dateAdded": "2025-06-01"
+    },
+    {
+      "id": "v100",
+      "title": "Food Groups for Kids",
+      "description": "Five food groups explained.",
+      "imageUrl": null,
+      "videoId": "pmgkj01uUTw",
+      "articleUrl": null,
+      "category": "healthy_eating",
+      "resourceType": "video",
+      "tags": [
+        "kids",
+        "food_groups"
+      ],
+      "dateAdded": "2025-06-01"
+    },
+    {
+      "id": "v101",
+      "title": "Food Label Know‑How (ADA)",
+      "description": "Reading nutrition labels for diabetes.",
+      "imageUrl": null,
+      "videoId": "--ybe1LSwX4",
+      "articleUrl": null,
+      "category": "nutrition",
+      "resourceType": "video",
+      "tags": [
+        "labels",
+        "ADA"
+      ],
+      "dateAdded": "2025-06-01"
+    },
+    {
+      "id": "v102",
+      "title": "MyPlate: Healthy Eating Video",
+      "description": "NIDDK diabetes meal planning.",
+      "imageUrl": null,
+      "videoId": "3PZQSSpprfM",
+      "articleUrl": null,
+      "category": "meal_planning",
+      "resourceType": "video",
+      "tags": [
+        "diabetes",
+        "myplate"
+      ],
+      "dateAdded": "2025-06-01"
+    },
+    {
+      "id": "v103",
+      "title": "The Nutrition War You Don't Know You're In",
+      "description": "PCRM discussion of diet controversies.",
+      "imageUrl": null,
+      "videoId": "2EAFvBklGcQ",
+      "articleUrl": null,
+      "category": "nutrition",
+      "resourceType": "video",
+      "tags": [
+        "PCRM",
+        "controversies"
+      ],
+      "dateAdded": "2025-06-01"
+    },
+    {
+      "id": "v104",
+      "title": "How Quickly Your Body Reacts to Healthy Food",
+      "description": "Two-week changes & biomarkers.",
+      "imageUrl": null,
+      "videoId": "LHjrbpqSruk",
+      "articleUrl": null,
+      "category": "healthy_eating",
+      "resourceType": "video",
+      "tags": [
+        "biomarkers"
+      ],
+      "dateAdded": "2025-06-01"
+    },
+    {
+      "id": "v105",
+      "title": "A Woman's Journey: Reducing Risks",
+      "description": "Johns Hopkins lifestyle & diet talk.",
+      "imageUrl": null,
+      "videoId": "zuNdHMAjHyQ",
+      "articleUrl": null,
+      "category": "healthy_eating",
+      "resourceType": "video",
+      "tags": [
+        "prevention"
+      ],
+      "dateAdded": "2025-06-01"
+    },
+    {
+      "id": "v106",
+      "title": "A Woman's Journey: Vitamins & Minerals",
+      "description": "Supplements overview.",
+      "imageUrl": null,
+      "videoId": "rTfuGQrSu9M",
+      "articleUrl": null,
+      "category": "nutrition",
+      "resourceType": "video",
+      "tags": [
+        "vitamins",
+        "minerals"
+      ],
+      "dateAdded": "2025-06-01"
+    },
+    {
+      "id": "v107",
+      "title": "Best/Worst Diets in America",
+      "description": "Evidence-based ranking overview.",
+      "imageUrl": null,
+      "videoId": "hpTIIy42lck",
+      "articleUrl": null,
+      "category": "healthy_eating",
+      "resourceType": "video",
+      "tags": [
+        "diets"
+      ],
+      "dateAdded": "2025-06-01"
+    },
+    {
+      "id": "v108",
+      "title": "How to Spot a Fad Diet",
+      "description": "Red flags & evidence checks.",
+      "imageUrl": null,
+      "videoId": "P4oFFEcVvyg",
+      "articleUrl": null,
+      "category": "healthy_eating",
+      "resourceType": "video",
+      "tags": [
+        "fad_diets"
+      ],
+      "dateAdded": "2025-06-01"
+    },
+    {
+      "id": "v109",
+      "title": "Our food systems & health of people/planet",
+      "description": "WHO on healthier food systems.",
+      "imageUrl": null,
+      "videoId": "kHXJ5O5EDIc",
+      "articleUrl": null,
+      "category": "nutrition",
+      "resourceType": "video",
+      "tags": [
+        "policy",
+        "food_systems"
+      ],
+      "dateAdded": "2025-06-01"
+    },
+    {
+      "id": "v110",
+      "title": "Second Int'l Conf. on Nutrition",
+      "description": "WHO/FAO conference highlights.",
+      "imageUrl": null,
+      "videoId": "xpr5hzhOGAM",
+      "articleUrl": null,
+      "category": "nutrition",
+      "resourceType": "video",
+      "tags": [
+        "policy"
+      ],
+      "dateAdded": "2025-06-01"
+    },
+    {
+      "id": "v111",
+      "title": "Supporting Healthy Diets via Regulation",
+      "description": "WHO webinar on regulatory capacity.",
+      "imageUrl": null,
+      "videoId": "NIjc4I5MsCY",
+      "articleUrl": null,
+      "category": "nutrition",
+      "resourceType": "video",
+      "tags": [
+        "policy",
+        "regulation"
+      ],
+      "dateAdded": "2025-06-01"
+    },
+    {
+      "id": "v112",
+      "title": "Healthy Eating with Gestational Diabetes",
+      "description": "Overview of food groups & planning.",
+      "imageUrl": null,
+      "videoId": "-v5zzUILI7s",
+      "articleUrl": null,
+      "category": "meal_planning",
+      "resourceType": "video",
+      "tags": [
+        "gestational_diabetes"
+      ],
+      "dateAdded": "2025-06-01"
+    },
+    {
+      "id": "v113",
+      "title": "Navigating Nutrition with Diabetes",
+      "description": "Practical tips to thrive with diabetes.",
+      "imageUrl": null,
+      "videoId": "yVm_XIOP8WQ",
+      "articleUrl": null,
+      "category": "nutrition",
+      "resourceType": "video",
+      "tags": [
+        "diabetes"
+      ],
+      "dateAdded": "2025-06-01"
+    },
+    {
+      "id": "v114",
+      "title": "Create Your Plate (ADA demo)",
+      "description": "Visual plate method walkthrough.",
+      "imageUrl": null,
+      "videoId": "A6LZijdsGu0",
+      "articleUrl": null,
+      "category": "meal_planning",
+      "resourceType": "video",
+      "tags": [
+        "diabetes"
+      ],
+      "dateAdded": "2025-06-01"
+    },
+    {
+      "id": "v115",
+      "title": "What to Eat for a Healthy Heart",
+      "description": "AHA: foods to choose & avoid.",
+      "imageUrl": null,
+      "videoId": "i1kgs05gdyQ",
+      "articleUrl": null,
+      "category": "healthy_eating",
+      "resourceType": "video",
+      "tags": [
+        "AHA",
+        "heart"
+      ],
+      "dateAdded": "2025-06-01"
+    },
+    {
+      "id": "v116",
+      "title": "Healthy Eating on a Budget (NHS)",
+      "description": "Dietitian tips to save money.",
+      "imageUrl": null,
+      "videoId": "Q5GI6H9QfNw",
+      "articleUrl": null,
+      "category": "healthy_eating",
+      "resourceType": "video",
+      "tags": [
+        "budget",
+        "NHS"
+      ],
+      "dateAdded": "2025-06-01"
+    },
+    {
+      "id": "v117",
+      "title": "How much is five‑a‑day? (NHS)",
+      "description": "Portion guidance.",
+      "imageUrl": null,
+      "videoId": "b-uX6N4RZjg",
+      "articleUrl": null,
+      "category": "healthy_eating",
+      "resourceType": "video",
+      "tags": [
+        "fruit_veg"
+      ],
+      "dateAdded": "2025-06-01"
+    },
+    {
+      "id": "v118",
+      "title": "Eating Well on the Go (AHA Fit Facts)",
+      "description": "Snacking & portable options.",
+      "imageUrl": null,
+      "videoId": "zJgHbifIx-Q",
+      "articleUrl": null,
+      "category": "healthy_eating",
+      "resourceType": "video",
+      "tags": [
+        "snacks"
+      ],
+      "dateAdded": "2025-06-01"
+    },
+    {
+      "id": "v119",
+      "title": "No Nonsense Nutrition: Healthy Eating 101",
+      "description": "University outreach talk.",
+      "imageUrl": null,
+      "videoId": "iiPnhh_d6As",
+      "articleUrl": null,
+      "category": "healthy_eating",
+      "resourceType": "video",
+      "tags": [
+        "education"
+      ],
+      "dateAdded": "2025-06-01"
+    },
+    {
+      "id": "a1",
+      "title": "Healthy Eating Plate (overview)",
+      "description": "Harvard's simple plate model.",
+      "imageUrl": null,
+      "videoId": null,
+      "articleUrl": "https://www.hsph.harvard.edu/nutritionsource/healthy-eating-plate/",
+      "category": "healthy_eating",
+      "resourceType": "article",
+      "tags": [
+        "plate",
+        "Harvard"
+      ],
+      "dateAdded": "2025-06-01"
+    },
+    {
+      "id": "a2",
+      "title": "Carbohydrates",
+      "description": "Quality matters more than quantity.",
+      "imageUrl": null,
+      "videoId": null,
+      "articleUrl": "https://nutritionsource.hsph.harvard.edu/carbohydrates/",
+      "category": "nutrition",
+      "resourceType": "article",
+      "tags": [
+        "carbohydrates"
+      ],
+      "dateAdded": "2025-06-01"
+    },
+    {
+      "id": "a3",
+      "title": "Carbohydrates & Blood Sugar",
+      "description": "Glycemic index and blood sugar.",
+      "imageUrl": null,
+      "videoId": null,
+      "articleUrl": "https://nutritionsource.hsph.harvard.edu/carbohydrates/carbohydrates-and-blood-sugar/",
+      "category": "nutrition",
+      "resourceType": "article",
+      "tags": [
+        "glycemic_index"
+      ],
+      "dateAdded": "2025-06-01"
+    },
+    {
+      "id": "a4",
+      "title": "Fats & Cholesterol",
+      "description": "Choose unsaturated fats, avoid trans fats.",
+      "imageUrl": null,
+      "videoId": null,
+      "articleUrl": "https://nutritionsource.hsph.harvard.edu/what-should-you-eat/fats-and-cholesterol/",
+      "category": "nutrition",
+      "resourceType": "article",
+      "tags": [
+        "fats",
+        "cholesterol"
+      ],
+      "dateAdded": "2025-06-01"
+    },
+    {
+      "id": "a5",
+      "title": "Types of Fat",
+      "description": "Saturated vs. unsaturated vs. trans.",
+      "imageUrl": null,
+      "videoId": null,
+      "articleUrl": "https://nutritionsource.hsph.harvard.edu/what-should-you-eat/fats-and-cholesterol/types-of-fat/",
+      "category": "nutrition",
+      "resourceType": "article",
+      "tags": [
+        "fat_types"
+      ],
+      "dateAdded": "2025-06-01"
+    },
+    {
+      "id": "a6",
+      "title": "Cholesterol",
+      "description": "Understanding cholesterol & triglycerides.",
+      "imageUrl": null,
+      "videoId": null,
+      "articleUrl": "https://nutritionsource.hsph.harvard.edu/what-should-you-eat/fats-and-cholesterol/cholesterol/",
+      "category": "nutrition",
+      "resourceType": "article",
+      "tags": [
+        "cholesterol"
+      ],
+      "dateAdded": "2025-06-01"
+    },
+    {
+      "id": "a7",
+      "title": "Protein",
+      "description": "Healthy sources and needs.",
+      "imageUrl": null,
+      "videoId": null,
+      "articleUrl": "https://nutritionsource.hsph.harvard.edu/what-should-you-eat/protein/",
+      "category": "nutrition",
+      "resourceType": "article",
+      "tags": [
+        "protein"
+      ],
+      "dateAdded": "2025-06-01"
+    },
+    {
+      "id": "a8",
+      "title": "Fiber",
+      "description": "Why fiber matters & how much to get.",
+      "imageUrl": null,
+      "videoId": null,
+      "articleUrl": "https://nutritionsource.hsph.harvard.edu/carbohydrates/fiber/",
+      "category": "nutrition",
+      "resourceType": "article",
+      "tags": [
+        "fiber"
+      ],
+      "dateAdded": "2025-06-01"
+    },
+    {
+      "id": "a9",
+      "title": "Vitamins & Minerals",
+      "description": "Micronutrient overview.",
+      "imageUrl": null,
+      "videoId": null,
+      "articleUrl": "https://nutritionsource.hsph.harvard.edu/vitamins/",
+      "category": "nutrition",
+      "resourceType": "article",
+      "tags": [
+        "vitamins",
+        "minerals"
+      ],
+      "dateAdded": "2025-06-01"
+    },
+    {
+      "id": "a10",
+      "title": "Vitamin D (Harvard)",
+      "description": "Role of vitamin D.",
+      "imageUrl": null,
+      "videoId": null,
+      "articleUrl": "https://nutritionsource.hsph.harvard.edu/vitamin-d/",
+      "category": "nutrition",
+      "resourceType": "article",
+      "tags": [
+        "vitamin_d"
+      ],
+      "dateAdded": "2025-06-01"
+    },
+    {
+      "id": "a11",
+      "title": "Low-Carb Diets",
+      "description": "Evidence on low-carb patterns.",
+      "imageUrl": null,
+      "videoId": null,
+      "articleUrl": "https://nutritionsource.hsph.harvard.edu/carbohydrates/low-carbohydrate-diets/",
+      "category": "weight_loss",
+      "resourceType": "article",
+      "tags": [
+        "low_carb"
+      ],
+      "dateAdded": "2025-06-01"
+    },
+    {
+      "id": "a12",
+      "title": "Dietary Supplements",
+      "description": "When supplements are useful.",
+      "imageUrl": null,
+      "videoId": null,
+      "articleUrl": "https://nutritionsource.hsph.harvard.edu/dietary-supplements/",
+      "category": "nutrition",
+      "resourceType": "article",
+      "tags": [
+        "supplements"
+      ],
+      "dateAdded": "2025-06-01"
+    },
+    {
+      "id": "a13",
+      "title": "5 tips: Healthy Protein",
+      "description": "Quick tips to upgrade protein.",
+      "imageUrl": null,
+      "videoId": null,
+      "articleUrl": "https://nutritionsource.hsph.harvard.edu/2014/02/12/5-quick-tips-choosing-healthy-protein-foods/",
+      "category": "healthy_eating",
+      "resourceType": "article",
+      "tags": [
+        "protein_tips"
+      ],
+      "dateAdded": "2025-06-01"
+    },
+    {
+      "id": "a14",
+      "title": "Protein, Carbs & Weight Loss",
+      "description": "Macronutrients and weight loss.",
+      "imageUrl": null,
+      "videoId": null,
+      "articleUrl": "https://nutritionsource.hsph.harvard.edu/2014/02/14/protein-carbs-and-weight-loss/",
+      "category": "weight_loss",
+      "resourceType": "article",
+      "tags": [
+        "macros",
+        "weight_loss"
+      ],
+      "dateAdded": "2025-06-01"
+    },
+    {
+      "id": "a15",
+      "title": "Whole Grains",
+      "description": "Benefits of whole grains.",
+      "imageUrl": null,
+      "videoId": null,
+      "articleUrl": "https://nutritionsource.hsph.harvard.edu/what-should-you-eat/whole-grains/",
+      "category": "healthy_eating",
+      "resourceType": "article",
+      "tags": [
+        "whole_grains"
+      ],
+      "dateAdded": "2025-06-01"
+    },
+    {
+      "id": "a16",
+      "title": "Multivitamins",
+      "description": "Should I take a multivitamin?",
+      "imageUrl": null,
+      "videoId": null,
+      "articleUrl": "https://nutritionsource.hsph.harvard.edu/multivitamin/",
+      "category": "nutrition",
+      "resourceType": "article",
+      "tags": [
+        "multivitamin"
+      ],
+      "dateAdded": "2025-06-01"
+    },
+    {
+      "id": "a17",
+      "title": "WHO: Healthy Diet",
+      "description": "Key recommendations for a healthy diet.",
+      "imageUrl": null,
+      "videoId": null,
+      "articleUrl": "https://www.who.int/health-topics/healthy-diet",
+      "category": "healthy_eating",
+      "resourceType": "article",
+      "tags": [
+        "WHO",
+        "guidance"
+      ],
+      "dateAdded": "2025-06-01"
+    },
+    {
+      "id": "a18",
+      "title": "FAO: Dietary Guidelines (FBDG)",
+      "description": "Food-based dietary guidelines worldwide.",
+      "imageUrl": null,
+      "videoId": null,
+      "articleUrl": "https://www.fao.org/nutrition/education/food-dietary-guidelines/en/",
+      "category": "healthy_eating",
+      "resourceType": "article",
+      "tags": [
+        "FAO",
+        "FBDG"
+      ],
+      "dateAdded": "2025-06-01"
+    },
+    {
+      "id": "a19",
+      "title": "FAO: Nutrition Education",
+      "description": "Why nutrition education matters.",
+      "imageUrl": null,
+      "videoId": null,
+      "articleUrl": "https://www.fao.org/nutrition/education/en/",
+      "category": "nutrition",
+      "resourceType": "article",
+      "tags": [
+        "FAO",
+        "education"
+      ],
+      "dateAdded": "2025-06-01"
+    },
+    {
+      "id": "a20",
+      "title": "FAO: Sustainable healthy diets",
+      "description": "Guiding principles for sustainable diets.",
+      "imageUrl": null,
+      "videoId": null,
+      "articleUrl": "https://www.fao.org/nutrition/education/dietary-guidelines/background/sustainable-dietary-guidelines/en/",
+      "category": "nutrition",
+      "resourceType": "article",
+      "tags": [
+        "sustainability"
+      ],
+      "dateAdded": "2025-06-01"
+    },
+    {
+      "id": "a21",
+      "title": "CDC: Physical Activity Guidelines Overview",
+      "description": "The amounts & types of activity needed.",
+      "imageUrl": null,
+      "videoId": null,
+      "articleUrl": "https://www.cdc.gov/physical-activity-basics/guidelines/index.html",
+      "category": "exercise",
+      "resourceType": "article",
+      "tags": [
+        "CDC",
+        "guidelines"
+      ],
+      "dateAdded": "2025-06-01"
+    },
+    {
+      "id": "a22",
+      "title": "CDC: Guidelines & Recommended Strategies",
+      "description": "Overview of U.S. Physical Activity Guidelines.",
+      "imageUrl": null,
+      "videoId": null,
+      "articleUrl": "https://www.cdc.gov/physical-activity/php/guidelines-recommendations/index.html",
+      "category": "exercise",
+      "resourceType": "article",
+      "tags": [
+        "CDC"
+      ],
+      "dateAdded": "2025-06-01"
+    },
+    {
+      "id": "a23",
+      "title": "NIH ODS: Vitamin D (Consumer)",
+      "description": "Vitamin D fact sheet for consumers.",
+      "imageUrl": null,
+      "videoId": null,
+      "articleUrl": "https://ods.od.nih.gov/factsheets/VitaminD-Consumer/",
+      "category": "nutrition",
+      "resourceType": "article",
+      "tags": [
+        "NIH",
+        "vitamin_d"
+      ],
+      "dateAdded": "2025-06-01"
+    },
+    {
+      "id": "a24",
+      "title": "NIH ODS: Vitamin & Mineral Fact Sheets",
+      "description": "All ODS vitamin/mineral fact sheets.",
+      "imageUrl": null,
+      "videoId": null,
+      "articleUrl": "https://ods.od.nih.gov/factsheets/list-VitaminsMinerals/",
+      "category": "nutrition",
+      "resourceType": "article",
+      "tags": [
+        "NIH",
+        "factsheets"
+      ],
+      "dateAdded": "2025-06-01"
+    },
+    {
+      "id": "a25",
+      "title": "NIH ODS: Dietary Supplement Fact Sheets",
+      "description": "All ODS supplement fact sheets.",
+      "imageUrl": null,
+      "videoId": null,
+      "articleUrl": "https://ods.od.nih.gov/factsheets/list-all/",
+      "category": "nutrition",
+      "resourceType": "article",
+      "tags": [
+        "NIH",
+        "supplements"
+      ],
+      "dateAdded": "2025-06-01"
+    },
+    {
+      "id": "a26",
+      "title": "BMJ: Low-carb diet & energy expenditure",
+      "description": "Trial comparing carb levels post‑weight loss.",
+      "imageUrl": null,
+      "videoId": null,
+      "articleUrl": "https://www.bmj.com/content/363/bmj.k4583",
+      "category": "weight_loss",
+      "resourceType": "article",
+      "tags": [
+        "BMJ",
+        "low_carb"
+      ],
+      "dateAdded": "2025-06-01"
+    },
+    {
+      "id": "a27",
+      "title": "BMJ: Digital behavior weight loss meta-analysis",
+      "description": "Systematic review on digital supports for weight loss.",
+      "imageUrl": null,
+      "videoId": null,
+      "articleUrl": "https://www.bmj.com/content/377/bmj-2021-069719",
+      "category": "weight_loss",
+      "resourceType": "article",
+      "tags": [
+        "BMJ",
+        "systematic_review"
+      ],
+      "dateAdded": "2025-06-01"
+    },
+    {
+      "id": "a28",
+      "title": "Cochrane: Weight-loss diets & blood pressure",
+      "description": "Review on diets and hypertension outcomes.",
+      "imageUrl": null,
+      "videoId": null,
+      "articleUrl": "https://www.cochrane.org/evidence/CD008274_do-weight-loss-diets-affect-blood-pressure-and-reduce-effects-high-blood-pressure-hypertension",
+      "category": "weight_loss",
+      "resourceType": "article",
+      "tags": [
+        "Cochrane",
+        "hypertension"
+      ],
+      "dateAdded": "2025-06-01"
+    },
+    {
+      "id": "a29",
+      "title": "Cochrane: Low-GI/GL diets for weight loss",
+      "description": "Do low-GI/GL diets help with weight?",
+      "imageUrl": null,
+      "videoId": null,
+      "articleUrl": "https://www.cochrane.org/evidence/CD005105_do-low-glycaemic-index-or-low-glycaemic-load-diets-help-people-overweight-or-obesity-lose-weight",
+      "category": "weight_loss",
+      "resourceType": "article",
+      "tags": [
+        "Cochrane",
+        "GI"
+      ],
+      "dateAdded": "2025-06-01"
+    },
+    {
+      "id": "a30",
+      "title": "UNICEF Somalia: Nutrition Strategy 2020–2025",
+      "description": "Strategic plan to improve nutrition.",
+      "imageUrl": null,
+      "videoId": null,
+      "articleUrl": "https://www.unicef.org/somalia/media/1756/file/Somalia-nutrition-strategy-2020-2025.pdf",
+      "category": "nutrition",
+      "resourceType": "article",
+      "tags": [
+        "Somalia",
+        "UNICEF",
+        "strategy"
+      ],
+      "dateAdded": "2025-06-01"
+    },
+    {
+      "id": "a31",
+      "title": "UNICEF Somalia: Breastfeeding week press release",
+      "description": "Importance of breastfeeding in Somalia.",
+      "imageUrl": null,
+      "videoId": null,
+      "articleUrl": "https://www.unicef.org/somalia/press-releases/breastfeeding-week-call-step",
+      "category": "nutrition",
+      "resourceType": "article",
+      "tags": [
+        "Somalia",
+        "breastfeeding"
+      ],
+      "dateAdded": "2025-06-01"
+    },
+    {
+      "id": "a32",
+      "title": "UNICEF Somalia: 2024 Year-End SitRep",
+      "description": "Nutrition service coverage & results.",
+      "imageUrl": null,
+      "videoId": null,
+      "articleUrl": "https://www.unicef.org/media/168076/file/Somalia-Humanitarian-SitRep-No.12-(Year-End)-01-January-to-31-December-2024.pdf.pdf",
+      "category": "nutrition",
+      "resourceType": "article",
+      "tags": [
+        "Somalia",
+        "IYCF"
+      ],
+      "dateAdded": "2025-06-01"
+    },
+    {
+      "id": "a33",
+      "title": "UNICEF Somalia: 2019 Micronutrient Survey",
+      "description": "Key findings on micronutrient status in Somalia.",
+      "imageUrl": null,
+      "videoId": null,
+      "articleUrl": "https://www.unicef.org/somalia/media/1681/file/Somalia-Micronutient-Survey-2019.pdf",
+      "category": "nutrition",
+      "resourceType": "article",
+      "tags": [
+        "Somalia",
+        "micronutrients"
+      ],
+      "dateAdded": "2025-06-01"
+    },
+    {
+      "id": "a34",
+      "title": "UNICEF Somalia: Humanitarian SitRep Feb 2025",
+      "description": "Nutrition situation & BSFP focus.",
+      "imageUrl": null,
+      "videoId": null,
+      "articleUrl": "https://www.unicef.org/media/169351/file/UNICEF%20Somalia%20Humanitarian%20Situation%20Report%20No.%202%20-%20February%202025.pdf.pdf",
+      "category": "nutrition",
+      "resourceType": "article",
+      "tags": [
+        "Somalia",
+        "malnutrition"
+      ],
+      "dateAdded": "2025-06-01"
+    },
+    {
+      "id": "a35",
+      "title": "American Journal of Clinical Nutrition (AJCN)",
+      "description": "Leading clinical nutrition research journal.",
+      "imageUrl": null,
+      "videoId": null,
+      "articleUrl": "https://ajcn.nutrition.org/",
+      "category": "nutrition",
+      "resourceType": "article",
+      "tags": [
+        "journal",
+        "AJCN"
+      ],
+      "dateAdded": "2025-06-01"
+    },
+    {
+      "id": "a36",
+      "title": "Advances in Nutrition",
+      "description": "Review journal in nutrition science.",
+      "imageUrl": null,
+      "videoId": null,
+      "articleUrl": "https://advances.nutrition.org/",
+      "category": "nutrition",
+      "resourceType": "article",
+      "tags": [
+        "journal",
+        "reviews"
+      ],
+      "dateAdded": "2025-06-01"
+    }
+  ]
+}

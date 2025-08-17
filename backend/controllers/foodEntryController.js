@@ -3,6 +3,7 @@ import { foodEntrySchema } from "../validators/validator.js";
 import { Op } from "sequelize";
 import foodTranslationService from "../services/foodTranslationService.js";
 import imageAnalysisService from "../services/imageAnalysisService.js";
+import mlNutritionService from "../services/mlNutritionService.js";
 import multer from "multer";
 import path from "path";
 import fs from "fs";
@@ -34,6 +35,26 @@ const upload = multer({
   },
 }).single("image");
 
+// Initialize ML models when the controller is loaded
+let mlModelsInitialized = false;
+
+async function initializeMLModels() {
+  if (!mlModelsInitialized) {
+    try {
+      console.log("🚀 Initializing ML nutrition models...");
+      await mlNutritionService.initializeModels();
+      mlModelsInitialized = true;
+      console.log("✅ ML models initialized successfully");
+    } catch (error) {
+      console.error("❌ Failed to initialize ML models:", error.message);
+      console.log("⚠️ Will use OpenAI fallback for nutrition prediction");
+    }
+  }
+}
+
+// Initialize ML models
+initializeMLModels();
+
 // Add food entry
 export const addFoodEntry = async (req, res) => {
   try {
@@ -48,27 +69,42 @@ export const addFoodEntry = async (req, res) => {
       );
     }
 
-    // Get nutrition data
-    const nutritionData = await foodTranslationService.getNutritionInfo(
-      englishFoodName
-    );
+    // Get nutrition data using ML models with fallback
+    let nutritionData;
+    try {
+      // Try to get nutrition data using ML models
+      const portionSize = parseFloat(portion_size) || 100;
+      nutritionData = await mlNutritionService.getNutritionPrediction(
+        englishFoodName,
+        portionSize,
+        "unknown", // Default category
+        "g",
+        imageAnalysisService // Pass as fallback service
+      );
+    } catch (error) {
+      console.log("⚠️ ML nutrition prediction failed, using USDA API fallback");
+      // Fallback to USDA API
+      nutritionData = await foodTranslationService.getNutritionInfo(
+        englishFoodName
+      );
+    }
 
     // Create food entry with nutrition data
     const foodEntry = await FoodEntry.create({
       userId,
       foodName: englishFoodName,
       foodNameSomali: food_name_somali || englishFoodName,
-      calories: nutritionData.nutrients.calories,
-      protein: nutritionData.nutrients.protein,
-      fat: nutritionData.nutrients.fats,
-      carbohydrates: nutritionData.nutrients.carbs,
-      vitaminA: nutritionData.nutrients.vitamins.A,
-      vitaminC: nutritionData.nutrients.vitamins.C,
-      calcium: nutritionData.nutrients.minerals.calcium,
-      iron: nutritionData.nutrients.minerals.iron,
-      fdcId: nutritionData.fdcId,
-      servingSize: nutritionData.servingSize,
-      servingUnit: nutritionData.servingUnit,
+      calories: nutritionData.nutrients?.calories || nutritionData.calories || 0,
+      protein: nutritionData.nutrients?.protein || nutritionData.protein || 0,
+      fat: nutritionData.nutrients?.fats || nutritionData.fat || 0,
+      carbohydrates: nutritionData.nutrients?.carbs || nutritionData.carbohydrates || 0,
+      vitaminA: nutritionData.nutrients?.vitamins?.A || nutritionData.vitamins?.A || 0,
+      vitaminC: nutritionData.nutrients?.vitamins?.C || nutritionData.vitamins?.C || 0,
+      calcium: nutritionData.nutrients?.minerals?.calcium || nutritionData.minerals?.calcium || 0,
+      iron: nutritionData.nutrients?.minerals?.iron || nutritionData.minerals?.iron || 0,
+      fdcId: nutritionData.fdcId || null,
+      servingSize: nutritionData.servingSize || portion_size,
+      servingUnit: nutritionData.servingUnit || "g",
       portionSize: portion_size || "N/A",
     });
 
@@ -238,47 +274,64 @@ export const addFoodEntryFromImage = async (req, res) => {
       const userId = req.user.user_id;
       const imagePath = req.file.path;
 
-      // Analyze image using OpenAI
+      console.log("📸 Analyzing food image...");
+
+      // Analyze image using OpenAI for food detection
       const analysisResult = await imageAnalysisService.analyzeFoodImage(
         imagePath
       );
+      
+      console.log("✅ Image analysis completed");
+      console.log(`🍽️ Detected ${analysisResult.food_items.length} food items`);
 
       // Process each food item
       const foodEntries = await Promise.all(
         analysisResult.food_items.map(async (item) => {
-          // Get nutrition data from USDA
-          const nutritionData = await foodTranslationService.getNutritionInfo(
-            item.name
-          );
+          console.log(`🍎 Processing: ${item.name} (${item.portionsize})`);
+          
+          // Extract portion size
+          const portionMatch = item.portionsize.match(/(\d+(?:\.\d+)?)(\w+)/);
+          const portionSize = portionMatch ? parseFloat(portionMatch[1]) : 100;
+          const portionUnit = portionMatch ? portionMatch[2] : 'g';
 
-          // Create food entry
+          // Use nutrition data from ML models (already included in analysis result)
+          const nutritionData = item.nutrients;
+
           return FoodEntry.create({
             userId,
             foodName: item.name,
             foodNameSomali: item.namesom,
-            calories: nutritionData.nutrients.calories,
-            protein: nutritionData.nutrients.protein,
-            fat: nutritionData.nutrients.fats,
-            carbohydrates: nutritionData.nutrients.carbs,
-            vitaminA: nutritionData.nutrients.vitamins.A,
-            vitaminC: nutritionData.nutrients.vitamins.C,
-            calcium: nutritionData.nutrients.minerals.calcium,
-            iron: nutritionData.nutrients.minerals.iron,
-            fdcId: nutritionData.fdcId,
-            servingSize: nutritionData.servingSize,
-            servingUnit: nutritionData.servingUnit,
+            calories: nutritionData.calories || 0,
+            protein: nutritionData.protein || 0,
+            fat: nutritionData.fats || nutritionData.fat || 0,
+            carbohydrates: nutritionData.carbs || nutritionData.carbohydrates || 0,
+            vitaminA: nutritionData.vitamins?.A || 0,
+            vitaminC: nutritionData.vitamins?.C || 0,
+            calcium: nutritionData.minerals?.calcium || 0,
+            iron: nutritionData.minerals?.iron || 0,
+            fdcId: null, // No FDC ID from ML/OpenAI
+            servingSize: portionSize,
+            servingUnit: portionUnit,
             portionSize: item.portionsize || "N/A",
+            imagePath: imagePath, // Store the image path
           });
         })
       );
 
-      // Clean up uploaded file
-      fs.unlinkSync(imagePath);
+      console.log(`✅ Successfully created ${foodEntries.length} food entries`);
 
       res.json({
         success: true,
         message: "Food entries added successfully",
         data: foodEntries,
+        analysis: {
+          totalItems: analysisResult.food_items.length,
+          items: analysisResult.food_items.map(item => ({
+            name: item.name,
+            portion: item.portionsize,
+            category: item.category
+          }))
+        }
       });
     } catch (error) {
       console.error("Error in addFoodEntryFromImage:", error);

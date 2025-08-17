@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:nutrition_app/utils/AppColor.dart';
 import 'package:provider/provider.dart';
 import 'package:nutrition_app/providers/food_entry_provider.dart';
+import 'package:nutrition_app/providers/language_provider.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 import 'package:permission_handler/permission_handler.dart';
@@ -24,6 +25,8 @@ class _LogMealScreenState extends State<LogMealScreen> {
   List<Map<String, dynamic>>? _analyzedFoodItems;
 
   Future<bool> _requestPermission(ImageSource source) async {
+    final languageProvider = context.read<LanguageProvider>();
+
     if (source == ImageSource.camera) {
       // Check if permission is already granted
       var status = await Permission.camera.status;
@@ -43,21 +46,23 @@ class _LogMealScreenState extends State<LogMealScreen> {
           showDialog(
             context: context,
             builder: (context) => AlertDialog(
-              title: const Text('Camera Permission Required'),
-              content: const Text(
-                'Camera access is required to take photos. Please enable it in settings.',
+              title: Text(
+                languageProvider.getText('camera_permission_required'),
+              ),
+              content: Text(
+                languageProvider.getText('camera_permission_message'),
               ),
               actions: [
                 TextButton(
                   onPressed: () => Navigator.pop(context),
-                  child: const Text('CANCEL'),
+                  child: Text(languageProvider.getText('cancel')),
                 ),
                 TextButton(
                   onPressed: () {
                     Navigator.pop(context);
                     openAppSettings();
                   },
-                  child: const Text('SETTINGS'),
+                  child: Text(languageProvider.getText('settings')),
                 ),
               ],
             ),
@@ -84,21 +89,23 @@ class _LogMealScreenState extends State<LogMealScreen> {
           showDialog(
             context: context,
             builder: (context) => AlertDialog(
-              title: const Text('Photo Library Permission Required'),
-              content: const Text(
-                'Photo library access is required to select photos. Please enable it in settings.',
+              title: Text(
+                languageProvider.getText('photo_library_permission_required'),
+              ),
+              content: Text(
+                languageProvider.getText('photo_library_permission_message'),
               ),
               actions: [
                 TextButton(
                   onPressed: () => Navigator.pop(context),
-                  child: const Text('CANCEL'),
+                  child: Text(languageProvider.getText('cancel')),
                 ),
                 TextButton(
                   onPressed: () {
                     Navigator.pop(context);
                     openAppSettings();
                   },
-                  child: const Text('SETTINGS'),
+                  child: Text(languageProvider.getText('settings')),
                 ),
               ],
             ),
@@ -110,13 +117,14 @@ class _LogMealScreenState extends State<LogMealScreen> {
   }
 
   Future<void> _pickImage(ImageSource source) async {
+    final languageProvider = context.read<LanguageProvider>();
+
     try {
       // Request permission first
       final hasPermission = await _requestPermission(source);
       if (!hasPermission) {
         setState(() {
-          _error =
-              'Permission denied. Please grant camera/gallery access in settings.';
+          _error = languageProvider.getText('permission_denied');
         });
         return;
       }
@@ -136,19 +144,22 @@ class _LogMealScreenState extends State<LogMealScreen> {
       }
     } on PlatformException catch (e) {
       setState(() {
-        _error = 'Failed to pick image: ${e.message}';
+        _error =
+            '${languageProvider.getText('failed_pick_image')}: ${e.message}';
       });
     } catch (e) {
       setState(() {
-        _error = 'An unexpected error occurred: $e';
+        _error = '${languageProvider.getText('unexpected_error')}: $e';
       });
     }
   }
 
   Future<void> _submitFoodEntry() async {
+    final languageProvider = context.read<LanguageProvider>();
+
     if (_selectedImage == null) {
       setState(() {
-        _error = 'Please select an image first';
+        _error = languageProvider.getText('please_select_image');
       });
       return;
     }
@@ -160,14 +171,17 @@ class _LogMealScreenState extends State<LogMealScreen> {
     });
 
     try {
-      final foodEntryProvider =
-          Provider.of<FoodEntryProvider>(context, listen: false);
-      final result =
-          await foodEntryProvider.addFoodEntryFromImage(_selectedImage!);
+      final foodEntryProvider = Provider.of<FoodEntryProvider>(
+        context,
+        listen: false,
+      );
+      final result = await foodEntryProvider.addFoodEntryFromImage(
+        _selectedImage!,
+      );
 
       if (result.isEmpty) {
         setState(() {
-          _error = 'No food items were detected in the image';
+          _error = languageProvider.getText('no_food_detected');
         });
         return;
       }
@@ -178,8 +192,8 @@ class _LogMealScreenState extends State<LogMealScreen> {
 
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Food items analyzed successfully'),
+          SnackBar(
+            content: Text(languageProvider.getText('food_analyzed_success')),
             backgroundColor: Colors.green,
             duration: Duration(seconds: 2),
           ),
@@ -193,7 +207,9 @@ class _LogMealScreenState extends State<LogMealScreen> {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Error: ${e.toString()}'),
+            content: Text(
+              '${languageProvider.getText('error')}: ${e.toString()}',
+            ),
             backgroundColor: Colors.red,
             duration: const Duration(seconds: 3),
           ),
@@ -210,13 +226,13 @@ class _LogMealScreenState extends State<LogMealScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final languageProvider = context.watch<LanguageProvider>();
+
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Log Meal',
-          style: GoogleFonts.poppins(
-            fontWeight: FontWeight.bold,
-          ),
+          languageProvider.getText('log_meal'),
+          style: GoogleFonts.poppins(fontWeight: FontWeight.bold),
         ),
       ),
       body: SingleChildScrollView(
@@ -237,7 +253,7 @@ class _LogMealScreenState extends State<LogMealScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Take or Upload Food Photo',
+                        languageProvider.getText('take_upload_photo'),
                         style: GoogleFonts.poppins(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
@@ -263,12 +279,15 @@ class _LogMealScreenState extends State<LogMealScreen> {
                             child: ElevatedButton.icon(
                               onPressed: () => _pickImage(ImageSource.camera),
                               icon: const Icon(Icons.camera_alt),
-                              label: const Text('Take Photo'),
+                              label: Text(
+                                languageProvider.getText('take_photo'),
+                              ),
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: primaryColor,
                                 foregroundColor: Colors.white,
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 12),
+                                padding: const EdgeInsets.symmetric(
+                                  vertical: 12,
+                                ),
                               ),
                             ),
                           ),
@@ -277,12 +296,13 @@ class _LogMealScreenState extends State<LogMealScreen> {
                             child: ElevatedButton.icon(
                               onPressed: () => _pickImage(ImageSource.gallery),
                               icon: const Icon(Icons.photo_library),
-                              label: const Text('Upload'),
+                              label: Text(languageProvider.getText('upload')),
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: primaryColor,
                                 foregroundColor: Colors.white,
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 12),
+                                padding: const EdgeInsets.symmetric(
+                                  vertical: 12,
+                                ),
                               ),
                             ),
                           ),
@@ -316,11 +336,12 @@ class _LogMealScreenState extends State<LogMealScreen> {
                                 child: CircularProgressIndicator(
                                   strokeWidth: 2,
                                   valueColor: AlwaysStoppedAnimation<Color>(
-                                      Colors.white),
+                                    Colors.white,
+                                  ),
                                 ),
                               )
                             : Text(
-                                'Analyze Food',
+                                languageProvider.getText('analyze_food'),
                                 style: GoogleFonts.poppins(
                                   fontSize: 16,
                                   fontWeight: FontWeight.w600,
@@ -344,7 +365,7 @@ class _LogMealScreenState extends State<LogMealScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Analyzed Food Items',
+                          languageProvider.getText('analyzed_food_items'),
                           style: GoogleFonts.poppins(
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
@@ -375,7 +396,10 @@ class _LogMealScreenState extends State<LogMealScreen> {
                                                 CrossAxisAlignment.start,
                                             children: [
                                               Text(
-                                                item['name'] ?? 'Unknown',
+                                                item['name'] ??
+                                                    languageProvider.getText(
+                                                      'unknown',
+                                                    ),
                                                 style: GoogleFonts.poppins(
                                                   fontWeight: FontWeight.w600,
                                                   fontSize: 16,
@@ -383,7 +407,7 @@ class _LogMealScreenState extends State<LogMealScreen> {
                                               ),
                                               const SizedBox(height: 4),
                                               Text(
-                                                'Somali: ${item['namesom'] ?? 'Unknown'}',
+                                                '${languageProvider.getText('somali')}: ${item['namesom'] ?? languageProvider.getText('unknown')}',
                                                 style: GoogleFonts.poppins(
                                                   color: textSecondaryColor,
                                                   fontSize: 14,
@@ -391,7 +415,7 @@ class _LogMealScreenState extends State<LogMealScreen> {
                                               ),
                                               const SizedBox(height: 4),
                                               Text(
-                                                'Portion: ${item['portionsize'] ?? 'N/A'}',
+                                                '${languageProvider.getText('portion')}: ${item['portionsize'] ?? 'N/A'}',
                                                 style: GoogleFonts.poppins(
                                                   color: textSecondaryColor,
                                                   fontSize: 14,
@@ -407,15 +431,135 @@ class _LogMealScreenState extends State<LogMealScreen> {
                                       spacing: 8,
                                       runSpacing: 8,
                                       children: [
-                                        _buildNutrientChip('Cal',
-                                            '${item['calories']?.toStringAsFixed(0) ?? 'N/A'}'),
-                                        _buildNutrientChip('Protein',
-                                            '${item['protein']?.toStringAsFixed(1) ?? 'N/A'}g'),
-                                        _buildNutrientChip('Carbs',
-                                            '${item['carbs']?.toStringAsFixed(1) ?? 'N/A'}g'),
-                                        _buildNutrientChip('Fat',
-                                            '${item['fat']?.toStringAsFixed(1) ?? 'N/A'}g'),
+                                        _buildNutrientChip(
+                                          'Cal',
+                                          '${item['calories']?.toStringAsFixed(0) ?? 'N/A'}',
+                                        ),
+                                        _buildNutrientChip(
+                                          'Protein',
+                                          '${item['protein']?.toStringAsFixed(1) ?? 'N/A'}g',
+                                        ),
+                                        _buildNutrientChip(
+                                          'Carbs',
+                                          '${item['carbs']?.toStringAsFixed(1) ?? 'N/A'}g',
+                                        ),
+                                        _buildNutrientChip(
+                                          'Fat',
+                                          '${item['fat']?.toStringAsFixed(1) ?? 'N/A'}g',
+                                        ),
+                                        _buildNutrientChip(
+                                          'Vit A',
+                                          '${item['vitaminA']?.toStringAsFixed(1) ?? 'N/A'}μg',
+                                        ),
+                                        _buildNutrientChip(
+                                          'Vit C',
+                                          '${item['vitaminC']?.toStringAsFixed(1) ?? 'N/A'}mg',
+                                        ),
+                                        _buildNutrientChip(
+                                          'Calcium',
+                                          '${item['calcium']?.toStringAsFixed(1) ?? 'N/A'}mg',
+                                        ),
+                                        _buildNutrientChip(
+                                          'Iron',
+                                          '${item['iron']?.toStringAsFixed(1) ?? 'N/A'}mg',
+                                        ),
                                       ],
+                                    ),
+                                    const SizedBox(height: 12),
+
+                                    // Detailed Nutrition Breakdown
+                                    Container(
+                                      padding: const EdgeInsets.all(12),
+                                      decoration: BoxDecoration(
+                                        color: Colors.grey[50],
+                                        borderRadius: BorderRadius.circular(8),
+                                        border: Border.all(
+                                          color: Colors.grey[300]!,
+                                        ),
+                                      ),
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            languageProvider.getText(
+                                              'detailed_nutrition',
+                                            ),
+                                            style: GoogleFonts.poppins(
+                                              fontWeight: FontWeight.w600,
+                                              fontSize: 14,
+                                              color: primaryColor,
+                                            ),
+                                          ),
+                                          const SizedBox(height: 8),
+
+                                          // Macronutrients
+                                          _buildNutritionRow(
+                                            languageProvider.getText(
+                                              'calories',
+                                            ),
+                                            '${item['calories']?.toStringAsFixed(0) ?? 'N/A'} cal',
+                                          ),
+                                          _buildNutritionRow(
+                                            'Protein',
+                                            '${item['protein']?.toStringAsFixed(1) ?? 'N/A'}g',
+                                          ),
+                                          _buildNutritionRow(
+                                            'Carbohydrates',
+                                            '${item['carbs']?.toStringAsFixed(1) ?? 'N/A'}g',
+                                          ),
+                                          _buildNutritionRow(
+                                            'Fat',
+                                            '${item['fat']?.toStringAsFixed(1) ?? 'N/A'}g',
+                                          ),
+
+                                          const Divider(height: 16),
+
+                                          // Vitamins
+                                          Text(
+                                            languageProvider.getText(
+                                              'vitamins',
+                                            ),
+                                            style: GoogleFonts.poppins(
+                                              fontWeight: FontWeight.w500,
+                                              fontSize: 12,
+                                              color: textSecondaryColor,
+                                            ),
+                                          ),
+                                          const SizedBox(height: 4),
+                                          _buildNutritionRow(
+                                            'Vitamin A',
+                                            '${item['vitaminA']?.toStringAsFixed(1) ?? 'N/A'} μg',
+                                          ),
+                                          _buildNutritionRow(
+                                            'Vitamin C',
+                                            '${item['vitaminC']?.toStringAsFixed(1) ?? 'N/A'} mg',
+                                          ),
+
+                                          const Divider(height: 16),
+
+                                          // Minerals
+                                          Text(
+                                            languageProvider.getText(
+                                              'minerals',
+                                            ),
+                                            style: GoogleFonts.poppins(
+                                              fontWeight: FontWeight.w500,
+                                              fontSize: 12,
+                                              color: textSecondaryColor,
+                                            ),
+                                          ),
+                                          const SizedBox(height: 4),
+                                          _buildNutritionRow(
+                                            'Calcium',
+                                            '${item['calcium']?.toStringAsFixed(1) ?? 'N/A'} mg',
+                                          ),
+                                          _buildNutritionRow(
+                                            'Iron',
+                                            '${item['iron']?.toStringAsFixed(1) ?? 'N/A'} mg',
+                                          ),
+                                        ],
+                                      ),
                                     ),
                                   ],
                                 ),
@@ -450,6 +594,22 @@ class _LogMealScreenState extends State<LogMealScreen> {
           fontWeight: FontWeight.w500,
         ),
       ),
+    );
+  }
+
+  Widget _buildNutritionRow(String label, String value) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text(
+          label,
+          style: GoogleFonts.poppins(fontSize: 13, color: textSecondaryColor),
+        ),
+        Text(
+          value,
+          style: GoogleFonts.poppins(fontSize: 13, fontWeight: FontWeight.w600),
+        ),
+      ],
     );
   }
 }

@@ -86,6 +86,11 @@ const FoodEntry = sequelize.define(
       allowNull: true,
       defaultValue: "N/A",
     },
+    imagePath: {
+      type: DataTypes.STRING(500),
+      allowNull: true,
+      defaultValue: null,
+    },
   },
   {
     tableName: "food_entries",
